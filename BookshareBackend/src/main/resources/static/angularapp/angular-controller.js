@@ -150,8 +150,15 @@ function mapperFactory($state, $http){
 		});
 	}
 	
-	function AddBook(){
-		$state.go('home.profile');
+	function AddBook(book){
+		$http.post("/book", book).success(function(response){
+            
+            console.log("New book added " + JSON.stringify(response));
+        })
+        .error(function(response, status){
+            
+            alert("Error adding a book "  + JSON.stringify(response));
+        })
 	}
 	
 	function History(){
@@ -164,7 +171,8 @@ function mapperFactory($state, $http){
 		History : History,
 		ListBook : ListBook,
 		AddBook : AddBook,
-		SearchBook : SearchBook
+		SearchBook : SearchBook,
+		loadAddBook: loadAddBook
 	};
 }
 
