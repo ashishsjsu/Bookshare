@@ -72,6 +72,30 @@ public class LoginDaoImpl implements LoginDao {
 		
 		return flag;
 	}
+
+		@Override
+	public Login getStudentByEmail(String email) {
+
+		try{
+			PreparedStatement preparedStatement = connection.prepareStatement("Select * from login where email = ?");
+			// Parameters start with 1
+			preparedStatement.setString(1, email);
+			ResultSet result = preparedStatement.executeQuery();
+			
+			if(result.next())
+			{
+				String loginEmail = result.getString("email");
+				String loginPassword = result.getString("password");
+				return new Login(loginEmail, loginPassword);
+			}
+		}
+		catch(SQLException ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
 	
 	//HELPER FUNCTIONS
 	
