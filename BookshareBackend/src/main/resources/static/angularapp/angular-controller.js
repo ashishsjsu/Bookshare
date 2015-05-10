@@ -1,8 +1,7 @@
 angular.module("BookShare", ['ui.router'])
 	.controller("appHome", ["$rootScope", "$scope", "$location", "student", "mapper", "$stateParams", appDashboard])
-	.controller("loginController", ["$rootScope", "$scope", "$location","student", LoginStudent])
+	.controller("loginController", ["$rootScope", "$scope", "$location", "$http", "$state", "student", LoginStudent])
 	.controller("signupController", ["$scope", SignupStudent])
-	.controller("errorController", ["$rootScope", "$scope", "student", handleError])
 	
 	.factory('student', ['$state', '$http', studentFactory])
 	.factory('mapper', ['$state', '$http', mapperFactory])
@@ -19,13 +18,8 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 	.state('register', {
 		url : '/register',
 		templateUrl : '/templates/register.html',
-		controller : 'signupController'
+		controller : 'loginController'
 	})
-	.state('error',{
-		url: '/login',
-		templateUrl: '/templates/login.html',
-		controller: 'errorController'
-	});
 	.state('home', {
 		url : '/home',
 		templateUrl : '/templates/dashboard.html',
@@ -65,33 +59,45 @@ function studentFactory($state, $http){
 		$state.go('register');
 	}
 
-	function Login(student){
-		return $http.post('/login', student)
+	function Login(student, success, failure){
+		
+        return $http.post("/login", "username=" + student.email +
+                "&password=" + student.password, {
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                } )
 		.success(function(response){
+			 
+			localStorage.setItem("session", {});		 
 			angular.copy(response, userObj);
-			console.log("User logged in " + JSON.stringify(response.firstName));
-			$state.go('home');
+			success();
+		
 		})
 		.error(function(response, status){
-			console.log("Login POST error: " + response + " status " + status);
+			alert("Login failed " + JSON.stringify(response));
+			angular.copy({'error':'LoginErr'}, userObj);
+			failure();
+		});
+	}
+	
+	function registerStudent(newstudent, success, failure){
+		
+		return $http.post("/student", newstudent)
+		.success(function(response){
+			console.log("Student registered " + JSON.stringify(response));
+			success();
+		})
+		.error(function(response, status){
+			console.log("Student registration error  " + JSON.stringify(response) + " " +status);
+			failure();
 		});
 	}
 	
 	return {
 		userObj : userObj,
 		Login : Login,
-		LoadSignup : LoadSignup
+		LoadSignup : LoadSignup,
+		registerStudent : registerStudent
 	};
-}
-
-function handleError($rootScope, $scope, student){
-	
-	console.log("Errorcontroller " + student.userObj.error);
-	if(student.userObj.error == "LoginError")
-	{
-		$scope.errorMsg = "Login failed. Invalid Email/password combination.";
-		$rootScope.authenticated = false;
-	}
 }
 
 
@@ -108,7 +114,6 @@ function mapperFactory($state, $http){
 	function ListBook(studentEmail){
 		return $http.get('/listUserbooks/' + studentEmail)
 		.success(function(response){
-			console.log("Logged User Books : " + JSON.stringify(response));
 			//angular.copy(response[0], mapperObj);
 			if(mapperObj.mapper != null || mapperObj.mapper != undefined){
 				mapperObj.mapper = [];
@@ -120,7 +125,7 @@ function mapperFactory($state, $http){
 			$state.go('home.listBook');
 		})
 		.error(function(response, status){
-			console.log("Login POST error: " + response + " status " + status);
+			alert("Error gettin books " + response);
 		});
 	}
 	
@@ -134,7 +139,6 @@ function mapperFactory($state, $http){
 			for(var i=0; i<response.length; i++){
 				mapperObj.mapper.push(response[i]);
 			}
-			console.log("User logged in " + JSON.stringify(response.firstName));
 			$state.go('home.listBook');
 		})
 		.error(function(response, status){
@@ -162,20 +166,64 @@ function mapperFactory($state, $http){
 
 //register callback method
 function SignupStudent($scope){
+
 	
 }
 
 
 //loginController callback method
-function LoginStudent($rootScope, $scope, $location, studentservice){
+function LoginStudent($rootScope, $scope, $location, $http, $state, studentservice){
 	
 	var studentService = studentservice;
-	//student login function
+
+//student login function
 	 $scope.LoginStudent = function(){
-		 studentService.Login($scope.student)
-		 console.log("login controller " + studentService.userObj);
-		 $rootScope.isAuthenticated = true;
+		 
+		 studentService.Login($scope.student, function()
+				 { 
+			 			$rootScope.isAuthenticated = true; 	 			
+			 			$http.get("/login").success(function(response){
+			 				angular.copy(response, studentService.userObj);
+			 				$state.go("home");
+			 			})
+			 			.error(function(response, status){
+			 				alert("Error retrieving user");
+			 			});
+				 }, 
+				 function(){ 
+			 
+						if(studentService.userObj.error == "LoginErr")
+						{
+							$scope.errorMsg = "Login failed. Invalid Email/password combination.";
+							$rootScope.authenticated = false;
+						}			 
+		 })
+	}
+	 
+	 
+	 $scope.registerStudent = function(){
+		 
+		 studentService.registerStudent($scope.signup, function(){
+			 
+			 studentService.Login($scope.signup, function(){ 
+	 			$rootScope.isAuthenticated = true; 	 			
+	 			$http.get("/login").success(function(response){
+	 				angular.copy(response, studentService.userObj);
+	 				$state.go("home");
+	 			})
+	 			.error(function(response, status){
+	 				alert("Error retrieving user");
+	 			});
+			})
+		 }, 
+		 function(){
+			 if(studentService.userObj.error == "LoginErr"){
+				$scope.errorMsg = "Login failed. Invalid Email/password combination.";
+				$rootScope.authenticated = false;
+			 }
+		 })
 	 }
+
 	 
 	 $scope.loadSignup = function(){
 		 console.log("Signup controller");
@@ -191,13 +239,27 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
 		$location.path("#/login");
 	}
 	
-	$scope.student = student.userObj.firstName;
+	$scope.profile = {};
+	
+	if(student.userObj != null || student.userObj != undefined){ 
+		//set scope in Dashboard
+		$scope.student = student.userObj.firstName; 
+		//set scope in profile partial page
+		$scope.FirstName = student.userObj.firstName;
+		$scope.LastName = student.userObj.lastName;
+		$scope.Email = student.userObj.email;
+		$scope.Phone = student.userObj.phone;
+		$scope.University = student.userObj.university;
+			
+	}
 	$scope.booksList = mapper.mapperObj.mapper;
 		
 	console.log("Book scope :" + JSON.stringify(mapper.mapperObj) +  " " + JSON.stringify($scope.booksList.mapper));
 	
 	$scope.logout = function(){
+		
 		$rootScope.isAuthenticated = false;
+		localStorage.removeItem("session");
 		student.userObj = null;
 		$location.path("#/login");
 	}
@@ -215,12 +277,10 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
 	}
 	
 	$scope.myBooks = function(){
-		console.log("My Books : " + student.userObj.email);
 		mapperService.ListBook(student.userObj.email);
 	}
 	
 	$scope.searchBook = function(){
-		console.log("Search Books : " + student.userObj.email);
 		mapperService.SearchBook($scope.keyval);
 		$scope.keyval = "";
 	}

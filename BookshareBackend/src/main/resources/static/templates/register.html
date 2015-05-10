@@ -12,19 +12,23 @@
     <div id="container_demo" >
          <div id="wrapper">
              <div id="register" class="animate form">
-                <form  action="" autocomplete="on"> 
+                <form  action="" autocomplete="on" ng-submit="registerStudent()"> 
                     <h1> Sign up </h1> 
                     <p> 
-                        <label for="namesignup" class="youmail" data-icon="e" > Your Name</label>
-                        <input id="namesignup" name="namesignup" required="required" type="email" placeholder="Joe Navrtil"/> 
+                        <label for="firstnamesignup" class="youmail" data-icon="e" > Your Name</label>
+                        <input id="namesignup" name="firstname" ng-model="signup.firstName" required="required" type="text" placeholder="Joe Navrtil"/> 
+                    </p>
+                    <p> 
+                        <label for="lastnamesignup" class="youmail" data-icon="e" > Your Name</label>
+                        <input id="namesignup" name="lastname" ng-model="signup.lastName" required="required" type="text" placeholder="Joe Navrtil"/> 
                     </p>
                     <p> 
                         <label for="emailsignup" class="youmail" data-icon="e" > Your email</label>
-                        <input id="emailsignup" name="emailsignup" required="required" type="email" placeholder="mysupermail@mail.com"/> 
+                        <input id="emailsignup" name="emailsignup" ng-model="signup.email" required="required" type="email" placeholder="mysupermail@mail.com"/> 
                     </p>
                     <p> 
                         <label for="passwordsignup" class="youpasswd" data-icon="p">Your password </label>
-                        <input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                        <input id="passwordsignup" name="passwordsignup" required="required" ng-model="signup.password" type="password" placeholder="eg. X8df!90EO"/>
                     </p>
                     <p> 
                         <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your password </label>
@@ -32,11 +36,11 @@
                     </p>
                     <p> 
                         <label for="phonesignup" class="youpasswd" data-icon="p">Enter your phone number </label>
-                        <input id="phonesignup" name="phonesignup" required="required" type="tel" placeholder="eg. 6047854214"/>
+                        <input id="phonesignup" name="phonesignup" ng-model="signup.phone" required="required" type="tel" placeholder="eg. 6047854214"/>
                     </p>
                     <p> 
                         <label for="universitysignup" class="youpasswd" data-icon="p">Your university name </label>
-                        <input id="universitysignup" name="universitysignup" required="required" type="text" placeholder="eg. SJSU"/>
+                        <input id="universitysignup" name="universitysignup" ng-model="signup.university" required="required" type="text" placeholder="eg. SJSU"/>
                     </p>
                     <p class="signin button"> 
                         <input type="submit" value="Sign up"/> 
