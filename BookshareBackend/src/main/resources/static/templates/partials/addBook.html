@@ -1,28 +1,42 @@
 
 <div id="wrapper-container">
     <div id="dataContainer" class="animate form">
-        <label for="BookAdd" class="youmail" > Enter Book Details </label>
+        <label for="BookAdd" class="youmail"> Enter Book Details </label>
         <div class="row">
-            <div class="col-md-10">
-              	<form action="post" ng-submit="createBook()">
-                    <input type="text" ng-model="keyval" name="title" placeholder="Enter Book Title Here" />  <br>  
-                    <input type="text" ng-model="keyval" name="author" placeholder="Enter Author Here" />    <br>
-                    <input type="text" ng-model="keyval" name="desc" placeholder="Enter Description Here" />    <br>
-                    <input type="text" ng-model="keyval" name="isbn" placeholder="Enter Book ISBN Here" />    <br>
-                    <input type="text" ng-model="keyval" name="sellingprice" placeholder="Enter Selling Price Here" />    <br>
-                    <input type="text" ng-model="keyval" name="rentprice" placeholder="Enter Daily Rent Price Here" />    <br>
-                    <input type="text" ng-model="keyval" name="duration" placeholder="Enter Rent Duration Here" />    	<br>
+            <div class="col-md-10" style="margin-left:8%">
+                <form action="post" ng-submit="addBook()">
+                    <input type="text" class="form-control" ng-model="newBook.bookTitle" name="title" placeholder="Enter Book Title Here" />
+                    <input type="text" class="form-control" ng-model="newBook.bookAuthor" name="author" placeholder="Enter Author Here" />
+                    <input type="text" class="form-control" ng-model="newBook.bookDesc" name="desc" placeholder="Enter Description Here" />
+                    <input type="text" class="form-control" ng-model="newBook.bookISBN" name="isbn" placeholder="Enter Book ISBN Here" />
+                    <input type="number" class="form-control" ng-model="newBook.sellPrice" name="sellingprice" placeholder="Enter Selling Price Here" />
+                    <input type="number" class="form-control" ng-model="newBook.rentPrice" name="rentprice" placeholder="Enter Daily Rent Price Here" />
+                    <input type="number" class="form-control" ng-model="newBook.rentDuration" name="duration" placeholder="Enter Rent Duration Here" />
+                   
                     <!-- Radio for Condition and Type (Rent or Buy collection) -->
-                    <div style="margin-top:10px" class="btn-group" data-toggle="buttons-checkbox">
-    				    <button type="button" class="btn btn-info">New</button>
-    				    <button type="button" class="btn btn-info">Used</button>
-    				</div>
-    		        <div style="margin-top:10px" class="btn-group" data-toggle="buttons-checkbox">
-    				    <button type="button" class="btn btn-info">Buy</button>
-    				    <button type="button" class="btn btn-info">Rent</button>
-    				    <button type="button" class="btn btn-info">Both</button>
-    				</div>
-                    <input type="submit" class="btn btn-info" value="createbook" />    
+                   
+                   <div class="row">
+                     <div class="col-md-6">
+                        <pre>{{radioModel}}</pre>
+                        <span class="uname" style="font-size:larger">Book condition: </span>
+                        <div style="margin-top:10px" class="btn-group">
+                            <label type="button" ng-model="radioModel" btn-radio="'New'" class="btn btn-primary" style="margin-right:0.5em">New</label>
+                            <label type="button" ng-model="radioModel" btn-radio="'Used'" class="btn btn-primary">Used</label>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                         <pre>{{newBook}}</pre>
+                         <span style="font-size:larger">Available for:</span>
+                        <div style="margin-top:10px" class="btn-group">
+                            <label ng-model="newBook.forBuy" class="btn btn-info" style="margin-right:0.5em" btn-checkbox>Buy</label>
+                            <label ng-model="newBook.forRent" class="btn btn-info" btn-checkbox>Rent</label>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <input type="submit" class="btn btn-info btn-lg btn-block" value="Create" style="margin-top:2em; margin-left:25%; width: 50%"/>
+                    </div>
+                        
                 </form>
             </div>
         </div>

@@ -111,6 +111,10 @@ function mapperFactory($state, $http){
 		$state.go('home.profile');
 	}
 	
+	function loadAddBook(){
+		$state.go('home.addBook');
+	}
+	
 	function ListBook(studentEmail){
 		return $http.get('/listUserbooks/' + studentEmail)
 		.success(function(response){
@@ -272,10 +276,6 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
 		mapperService.History();
 	}
 	
-	$scope.addBook = function(){
-		mapperService.AddBook();
-	}
-	
 	$scope.myBooks = function(){
 		mapperService.ListBook(student.userObj.email);
 	}
@@ -283,5 +283,25 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
 	$scope.searchBook = function(){
 		mapperService.SearchBook($scope.keyval);
 		$scope.keyval = "";
+	}
+
+	//scope  params for adding a book
+    $scope.newBook = {};
+    $scope.newBook.forBuy = false;
+    $scope.newBook.forRent = false;
+    $scope.newBook.forBoth = false;
+    $scope.radioModel = 'New';
+    
+    $scope.booksList = mapper.mapperObj.mapper;		
+	console.log("Book scope :" + JSON.stringify(mapper.mapperObj) +  " " + JSON.stringify($scope.booksList.mapper));
+	
+	$scope.addBook = function(){
+		
+        console.log("Addbook " + JSON.stringify($scope.newBook));      
+        mapperService.AddBook($scope.newBook);
+	}
+	
+	$scope.loadAddBook = function(){
+		mapperService.loadAddBook();
 	}
 }
