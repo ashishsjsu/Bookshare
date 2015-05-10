@@ -1,14 +1,30 @@
+
 <div id="wrapper-container">
     <div id="dataContainer" class="animate form">
-        <label for="conatiner-header" class="youmail" >Available Books</label>
-        <div id="result-conatiner">
-            <div ng-repeat="group in groups">
-                <div class="col-md-4">{{Book Name}}</div>
-                <div class="col-md-4">{{Book Author}}</div>
-                <div class="col-md-4">{{Book ISBN}}</div>
-                <div class="separator"></div>
+        <label for="BookAdd" class="youmail" > Enter Book Details </label>
+        <div class="row">
+            <div class="col-md-10">
+              	<form action="post" ng-submit="createBook()">
+                    <input type="text" ng-model="keyval" name="title" placeholder="Enter Book Title Here" />  <br>  
+                    <input type="text" ng-model="keyval" name="author" placeholder="Enter Author Here" />    <br>
+                    <input type="text" ng-model="keyval" name="desc" placeholder="Enter Description Here" />    <br>
+                    <input type="text" ng-model="keyval" name="isbn" placeholder="Enter Book ISBN Here" />    <br>
+                    <input type="text" ng-model="keyval" name="sellingprice" placeholder="Enter Selling Price Here" />    <br>
+                    <input type="text" ng-model="keyval" name="rentprice" placeholder="Enter Daily Rent Price Here" />    <br>
+                    <input type="text" ng-model="keyval" name="duration" placeholder="Enter Rent Duration Here" />    	<br>
+                    <!-- Radio for Condition and Type (Rent or Buy collection) -->
+                    <div style="margin-top:10px" class="btn-group" data-toggle="buttons-checkbox">
+    				    <button type="button" class="btn btn-info">New</button>
+    				    <button type="button" class="btn btn-info">Used</button>
+    				</div>
+    		        <div style="margin-top:10px" class="btn-group" data-toggle="buttons-checkbox">
+    				    <button type="button" class="btn btn-info">Buy</button>
+    				    <button type="button" class="btn btn-info">Rent</button>
+    				    <button type="button" class="btn btn-info">Both</button>
+    				</div>
+                    <input type="submit" class="btn btn-info" value="createbook" />    
+                </form>
             </div>
-            <!-- END: Outer ngRepeat. -->
         </div>
     </div>
 </div>
