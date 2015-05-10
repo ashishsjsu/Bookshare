@@ -30,8 +30,10 @@ repositories {
 
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-security")
-    compile('org.springframework.session:spring-session:1.0.0.RELEASE')
+    
+    compile('org.springframework.security:spring-security-config:4.0.1.RELEASE')
+    compile('org.springframework.security:spring-security-web:4.0.1.RELEASE')
+    compile('javax.servlet:javax.servlet-api:3.1.0')        
     compile('org.springframework.boot:spring-boot-starter-redis')
     compile("com.fasterxml.jackson.core:jackson-databind")
     compile("org.springframework.boot:spring-boot-starter-web")

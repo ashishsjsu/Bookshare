@@ -30,41 +30,15 @@ public class ApplicationController {
 	private StudentDao studentdao = new StudentDaoImpl();
 	private BookDao bookdao = new BookDaoImpl();
 	
-	/*
-	@RequestMapping( method = RequestMethod.GET, value = "/")
-    public @ResponseBody String getHome() {    	
-    	return "index";
-    }
-	*/
-	@RequestMapping( method = RequestMethod.GET, value = "/error")
-    public @ResponseBody String getError() {    	
-    	return "login";
+	@RequestMapping(value="/login", method = RequestMethod.GET)
+    public Student getCurrentUser() {
+        
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName(); 
+        
+        Student student = studentdao.getStudentDetails(userEmail);
+        return student;
     }
 
-    @RequestMapping("/resource")
-	public Map<String, Object> home() {
-	    Map<String,Object> model = new HashMap<String,Object>();
-	    model.put("id", UUID.randomUUID().toString());
-	    model.put("content", "Hello World");
-	    return model;
-    }
-    
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<JSONObject> login(@RequestBody Login login){
-    	
-    	Login studentLogin = new Login(login.getEmail(), login.getPassword()); 
-    	if(checkValidLogin(studentLogin.getEmail(), studentLogin.getPassword()))
-    	{
-    		String email = loginDao.loginStudent(studentLogin);
-    		Student student = studentdao.getStudentDetails(email);
-    		
-    		return new ResponseEntity<JSONObject>(jsonObj.getStudentJSON(student), HttpStatus.ACCEPTED);
-		
-    	}
-    	return null;
-    }
-    
     // Register Student
     @RequestMapping( method = RequestMethod.POST, value = "/student")
     public @ResponseBody Student createStudent(@Valid @RequestBody Student student, BindingResult result) {
