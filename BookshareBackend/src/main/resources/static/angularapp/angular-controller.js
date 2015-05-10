@@ -1,4 +1,5 @@
-angular.module("BookShare", ['ui.router'])
+
+angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
 	.controller("appHome", ["$rootScope", "$scope", "$location", "student", "mapper", "$stateParams", appDashboard])
 	.controller("loginController", ["$rootScope", "$scope", "$location", "$http", "$state", "student", LoginStudent])
 	.controller("signupController", ["$scope", SignupStudent])
@@ -150,13 +151,13 @@ function mapperFactory($state, $http){
 		});
 	}
 	
-	function AddBook(book){
-		$http.post("/book", book).success(function(response){
-            
+	function AddBook(currUser, book){
+		return $http.post("/"+ currUser +"/book", book)
+		.success(function(response){
             console.log("New book added " + JSON.stringify(response));
+            $state.go('home.listBook');
         })
         .error(function(response, status){
-            
             alert("Error adding a book "  + JSON.stringify(response));
         })
 	}
@@ -297,7 +298,6 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
     $scope.newBook = {};
     $scope.newBook.forBuy = false;
     $scope.newBook.forRent = false;
-    $scope.newBook.forBoth = false;
     $scope.radioModel = 'New';
     
     $scope.booksList = mapper.mapperObj.mapper;		
@@ -305,8 +305,8 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
 	
 	$scope.addBook = function(){
 		
-        console.log("Addbook " + JSON.stringify($scope.newBook));      
-        mapperService.AddBook($scope.newBook);
+        console.log("Calling Addbook " + student.userObj.email + " " +JSON.stringify($scope.newBook));      
+        mapperService.AddBook(student.userObj.email, $scope.newBook);
 	}
 	
 	$scope.loadAddBook = function(){

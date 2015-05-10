@@ -3,9 +3,14 @@ package cmpe275Project.Controller;
 import java.security.InvalidParameterException;
 import java.util.*;
 
+import javax.validation.Valid;
+
 import org.json.simple.JSONArray;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,25 +20,45 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cmpe275Project.DAO.*;
 import cmpe275Project.Model.*;
+import cmpe275Project.MyExceptions.Exceptions;
+import cmpe275Project.services.LoginService;
+import cmpe275Project.services.LoginServiceImpl;
 
 @RestController
 @RequestMapping("/")
 public class BookController {
 	Integer student_id = 1;
 	private BookDao bookdao = new BookDaoImpl();
+    private LoginService loginService = new LoginServiceImpl();
     
     // Create Book
-    @RequestMapping( method = RequestMethod.POST, value = "/createbook")
-    public @ResponseBody Book createBook(@RequestBody Book book) {
-    	
-	Book bookLocal = new Book(student_id, book.getBookTitle(), book.getBookAuthor(), book.getBookISBN(), book.getBookDesc(), book.getBookCondition());
-	checkValidBook(bookLocal);
-			
-	// Call StudentDao Class method to create Student.
-	bookdao.createBook(bookLocal);
-	System.out.println("1. Book added : " + bookLocal);
-	return bookLocal;
+    @RequestMapping( method = RequestMethod.POST, value = "/{email}/book")
+    public @ResponseBody Book createBook(@Valid @RequestBody Book book, @PathVariable String email, BindingResult result) {
+        
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof UserDetails) {
+            UserDetails details = (UserDetails)principal;
+            Login loggedIn = loginService.findByAccountName(details.getUsername());
+            String currEmail = loggedIn.getEmail();
+            if(loggedIn.getEmail().equals(email))
+            {
+                if(result.hasErrors())
+                {
+                    throw new Exceptions.InvalidRequestBodyException();
+                }
+                
+                Book bookLocal = new Book(email, book.getBookTitle(), book.getBookAuthor(), book.getBookISBN(), book.getBookDesc(), book.getBookCondition(), book.getRentPrice(), book.getSellPrice(), book.isForBuy(), book.isForRent(), book.getRentDuration());
+                checkValidBook(bookLocal);
+                        
+                bookdao.createBook(bookLocal);
+                System.out.println("1. Book added : " + bookLocal);
+                return bookLocal;
+            }
+        }
+        
+        return null;
     }
+
     
 	// Post for a required Book.
     @RequestMapping( method = RequestMethod.POST, value = "/postbook")

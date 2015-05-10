@@ -1,21 +1,50 @@
 package cmpe275Project.Model;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Document(collection = "books")
 public class Book {
 	private static Integer counter = 1;
-	@Id
+	@JsonView
 	private Integer bookId;
-	private Integer ownerId;
+	@JsonView(String.class)
+	private String ownerId;
+	@JsonView(String.class)
+	@NotNull
 	private String bookTitle;
+	@JsonView(String.class)
+	@NotNull
 	private String bookAuthor;
+	@JsonView(String.class)
 	private String bookDesc;
+	@JsonView(String.class)
+	@NotNull
+	@Id
 	private String bookISBN;
+	@JsonView(String.class)
+	@NotNull
 	private String bookCondition;
+	@JsonView(Integer.class)
+	@NotNull
+	private Integer rentPrice;
+	@JsonView(Integer.class)
+	@NotNull
+	private Integer sellPrice;
+	@JsonView(Boolean.class)
+	@NotNull
+	private boolean forRent;
+	@JsonView(Boolean.class)
+	@NotNull
+	private boolean forBuy;
+	@JsonView(Integer.class)
+	private Integer rentDuration;
 	
-	public Book(Integer ownerId, String bookTitle, String bookAuthor, String bookISBN, String bookDesc, String bookCondition){
+	public Book(String ownerId, String bookTitle, String bookAuthor, String bookISBN, String bookDesc, String bookCondition, Integer rentPrice, Integer sellPrice, Boolean forBuy, Boolean forRent, Integer rentDuration){
 		super();
 		bookId = counter++;
 		this.ownerId = ownerId;
@@ -24,6 +53,16 @@ public class Book {
 		this.bookDesc = bookDesc;
 		this.bookISBN = bookISBN;
 		this.bookCondition = bookCondition;
+		this.rentPrice = rentPrice;
+		this.sellPrice = sellPrice;
+		this.forBuy = forBuy;
+		this.forRent = forRent;
+		this.rentDuration = rentDuration;
+	}
+	
+	public Book()
+	{
+		
 	}
 	
 	public Integer getBookId() {
@@ -34,11 +73,11 @@ public class Book {
 		this.bookId = bookId;
 	}
 
-	public Integer getOwnerId() {
+	public String getOwnerId() {
 		return ownerId;
 	}
 
-	public void setOwnerId(Integer ownerId) {
+	public void setOwnerId(String ownerId) {
 		this.ownerId = ownerId;
 	}
 
@@ -80,5 +119,75 @@ public class Book {
 
 	public void setBookCondition(String bookCondition) {
 		this.bookCondition = bookCondition;
+	}
+
+	/**
+	 * @return the rentPrice
+	 */
+	public Integer getRentPrice() {
+		return rentPrice;
+	}
+
+	/**
+	 * @param rentPrice the rentPrice to set
+	 */
+	public void setRentPrice(Integer rentPrice) {
+		this.rentPrice = rentPrice;
+	}
+
+	/**
+	 * @return the sellPrice
+	 */
+	public Integer getSellPrice() {
+		return sellPrice;
+	}
+
+	/**
+	 * @param sellPrice the sellPrice to set
+	 */
+	public void setSellPrice(Integer sellPrice) {
+		this.sellPrice = sellPrice;
+	}
+
+	/**
+	 * @return the forRent
+	 */
+	public boolean isForRent() {
+		return forRent;
+	}
+
+	/**
+	 * @param forRent the forRent to set
+	 */
+	public void setForRent(boolean forRent) {
+		this.forRent = forRent;
+	}
+
+	/**
+	 * @return the forBuy
+	 */
+	public boolean isForBuy() {
+		return forBuy;
+	}
+
+	/**
+	 * @param forBuy the forBuy to set
+	 */
+	public void setForBuy(boolean forBuy) {
+		this.forBuy = forBuy;
+	}
+
+	/**
+	 * @return the rentDuration
+	 */
+	public Integer getRentDuration() {
+		return rentDuration;
+	}
+
+	/**
+	 * @param rentDuration the rentDuration to set
+	 */
+	public void setRentDuration(Integer rentDuration) {
+		this.rentDuration = rentDuration;
 	}
 }
