@@ -42,6 +42,7 @@ a.hiddenanchor{
 #wrapper-container{
     width: 100%;
 	right: 0px;
+	top : 25%;
 	margin: 0px auto;
     min-height: 500px;
 	position: relative;	
@@ -317,7 +318,6 @@ p.change_link{
 }
 
 #search{
-	position: absolute;
 	top: 0px;
     left: 0px;
 	width: 100%;	
@@ -334,8 +334,7 @@ p.change_link{
 }
 
 #dataContainer{
-    position: absolute;
-	top: 110px;
+	top: 10px;
     left: 0px;
 	width: 100%;	
 	padding: 18px 6% 10px 6%;
