@@ -2,9 +2,13 @@ package cmpe275Project.DAO;
 
 import java.sql.*;
 import java.util.Calendar;
+import org.springframework.stereotype.Repository;
 import cmpe275Project.Model.Login;
 import cmpe275Project.Util.SqlConfig;
 
+
+
+@Repository
 public class LoginDaoImpl implements LoginDao {
 	
 	private Connection connection;
