@@ -1,8 +1,9 @@
 
 angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
-	.controller("appHome", ["$rootScope", "$scope", "$location", "student", "mapper", "$stateParams", appDashboard])
+	.controller("appHome", ["$rootScope", "$scope", "$location", "$state","student", "mapper", "$stateParams", appDashboard])
 	.controller("loginController", ["$rootScope", "$scope", "$location", "$http", "$state", "student", LoginStudent])
 	.controller("signupController", ["$scope", SignupStudent])
+	.controller("booksController", ["$rootScope", "$scope", "$state","student","getBooks",  "mapper", "$stateParams", booksController])
 	
 	.factory('student', ['$state', '$http', studentFactory])
 	.factory('mapper', ['$state', '$http', mapperFactory])
@@ -42,9 +43,17 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 		controller: 'appHome'
 	})
 	.state('home.searchBook', {
-		url: '/home/searchBook',
+		url: '/home/searchBook/:query',
 		templateUrl: 'templates/partials/searchBooks.html',
-		controller: 'appHome'
+		controller: 'booksController',
+		resolve: {
+			getBooks: ['$stateParams', 'mapper',
+			           function($stateParams, mapper){
+						//this will retrieve the book for search query before the controller is loaded
+					   return mapper.SearchBook($stateParams.query);
+			}]
+		}//resolve
+	
 	})
 	.state('home.history', {
 		url: '/home/history',
@@ -107,6 +116,26 @@ function studentFactory($state, $http){
 }
 
 
+function testFactory($http){
+	
+	var keyval = {};
+	
+	function saveQueryParams(query, success){		
+		keyval = query;
+		success();
+	}
+	
+	function getQueryParams(){
+		return keyval;
+	}
+	
+	return {
+		keyval: keyval,
+		saveQueryParams : saveQueryParams,
+		getQueryParams : getQueryParams
+	}
+}
+
 //mapper factory callback method
 function mapperFactory($state, $http){
 	var mapperObj = {
@@ -150,7 +179,7 @@ function mapperFactory($state, $http){
 			for(var i=0; i<response.length; i++){
 				mapperObj.mapper.push(response[i]);
 			}
-			$state.go('home.searchBook');
+			return mapperObj.mapper;
 		})
 		.error(function(response, status){
 			console.log("Login POST error: " + response + " status " + status);
@@ -251,7 +280,7 @@ function LoginStudent($rootScope, $scope, $location, $http, $state, studentservi
 }
 
 //appHome
-function appDashboard($rootScope, $scope, $location, student, mapper, $stateParams){
+function appDashboard($rootScope, $scope, $location, $state, student, mapper, $stateParams){
 	
 	var mapperService = mapper;
 	if(!$rootScope.isAuthenticated){
@@ -260,7 +289,6 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
 	
 	$scope.profile = {};
 	$scope.booksList = {};
-	console.log("loaded home controller " + JSON.stringify($scope.booksList));
 	
 	if(student.userObj != null || student.userObj != undefined){ 
 		//set scope in Dashboard
@@ -291,15 +319,14 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
 	}
 	
 	$scope.booksList = mapper.mapperObj.mapper;
-	console.log("Book scope :" + JSON.stringify(mapper.mapperObj) +  " " + JSON.stringify($scope.booksList.mapper));
 	
 	$scope.myBooks = function(){
 		mapperService.ListBook(student.userObj.email);
 	}
 	
 	$scope.searchBook = function(){
-		mapperService.SearchBook($scope.keyval);
-		$scope.keyval = "";
+		$state.go('home.searchBook', {query : $scope.keyval});
+		//$scope.keyval = "";
 	}
 
 	//scope  params for adding a book
@@ -312,11 +339,19 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
 		
     $scope.addBook = function(){
 		
-        console.log("Calling Addbook " + student.userObj.email + " " +JSON.stringify($scope.newBook));      
         mapperService.AddBook(student.userObj.email, $scope.newBook);
 	}
 	
 	$scope.loadAddBook = function(){
 		mapperService.loadAddBook();
 	}
+}
+
+
+function booksController($rootScope, $scope, $location, $state, student, getBooks, mapper, $stateParams){
+	
+	//getBooks will return data from service
+	$scope.getBooks = getBooks;
+	$scope.booksList = $scope.getBooks.mapperObj.mapper;
+	
 }
