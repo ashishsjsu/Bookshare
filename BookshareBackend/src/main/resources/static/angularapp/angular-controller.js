@@ -41,12 +41,17 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 		templateUrl: 'templates/partials/listBooks.html',
 		controller: 'appHome'
 	})
+	.state('home.searchBook', {
+		url: '/home/searchBook',
+		templateUrl: 'templates/partials/searchBooks.html',
+		controller: 'appHome'
+	})
 	.state('home.history', {
 		url: '/home/history',
 		templateUrl: 'templates/partials/history.html',
 		controller: 'appHome'
-	});
-    
+	})
+	
 	$urlRouterProvider.otherwise('/login');
 }
 
@@ -135,16 +140,17 @@ function mapperFactory($state, $http){
 	}
 	
 	function SearchBook(keyval){
-		return $http.get('/searchbook/' + keyval)
+		return $http.get('/books/' + keyval)
 		.success(function(response){
 			console.log("Logged user search : " + JSON.stringify(response));
 			if(mapperObj.mapper != null || mapperObj.mapper != undefined){
 				mapperObj.mapper = [];
+				console.log("Cleared");
 			}
 			for(var i=0; i<response.length; i++){
 				mapperObj.mapper.push(response[i]);
 			}
-			$state.go('home.listBook');
+			$state.go('home.searchBook');
 		})
 		.error(function(response, status){
 			console.log("Login POST error: " + response + " status " + status);
@@ -253,6 +259,8 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
 	}
 	
 	$scope.profile = {};
+	$scope.booksList = {};
+	console.log("loaded home controller " + JSON.stringify($scope.booksList));
 	
 	if(student.userObj != null || student.userObj != undefined){ 
 		//set scope in Dashboard

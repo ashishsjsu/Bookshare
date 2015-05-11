@@ -429,3 +429,7 @@ p.change_link{
     width: 100%;
     border-bottom: grey solid 1px;;
 }
+
+.bidBtns{
+	margin-bottom : 0.2em;
+}
