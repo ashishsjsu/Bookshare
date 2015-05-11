@@ -36,14 +36,15 @@ public class BookBidsDaoImpl implements BookBidsDao {
 	@Override
 	public void addBid(BookBids bookBids) {
 		// TODO Auto-generated method stub
-			System.out.println("mongoOps " + mongoOps);
-			mongoOps.insert(bookBids);
+			
+		System.out.println("mongoOps " + mongoOps);
+		mongoOps.insert(bookBids);
 	}
 	@Override
-	public List<BookBids> listBids(int id) {
+	public List<BookBids> listBids(String email) {
 		// TODO Auto-generated method stub
 		
-		Query query = new Query(Criteria.where("bookId").is(id));
+		Query query = new Query(Criteria.where("bidderId").is(email));
 		List<BookBids> bids = mongoOps.find(query, BookBids.class);
 		return bids;
 	}
