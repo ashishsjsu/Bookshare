@@ -42,6 +42,11 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 		templateUrl: 'templates/partials/listBooks.html',
 		controller: 'appHome'
 	})
+	.state('home.bidBook', {
+		url: '/home/bidBook',
+		templateUrl: 'templates/partials/bid.html',
+		controller: 'appHome'
+	})
 	.state('home.searchBook', {
 		url: '/home/searchBook/:query',
 		templateUrl: 'templates/partials/searchBooks.html',
@@ -198,7 +203,7 @@ function mapperFactory($state, $http){
 	}
 	
 	function History(){
-		$state.go('home.profile');
+		$state.go('home.bidBook');
 	}
 	
 	return {
@@ -212,19 +217,12 @@ function mapperFactory($state, $http){
 	};
 }
 
-//register callback method
-function SignupStudent($scope){
-
-	
-}
-
-
 //loginController callback method
 function LoginStudent($rootScope, $scope, $location, $http, $state, studentservice){
 	
 	var studentService = studentservice;
 
-//student login function
+	//student login function
 	 $scope.LoginStudent = function(){
 		 
 		 studentService.Login($scope.student, function()
