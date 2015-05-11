@@ -354,4 +354,6 @@ function booksController($rootScope, $scope, $location, $state, student, getBook
 	$scope.getBooks = getBooks;
 	$scope.booksList = $scope.getBooks.mapperObj.mapper;
 	
+	console.log("Book scope bound " + JSON.stringify($scope.booksList) + JSON.stringify($scope.getBooks.mapperObj.mapper));
+	
 }

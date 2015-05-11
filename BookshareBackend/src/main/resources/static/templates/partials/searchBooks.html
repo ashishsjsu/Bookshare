@@ -12,13 +12,17 @@
 
 <div id="wrapper-container">
     <div id="dataContainer" class="animate form">
-    <div class="container" ng-repeat="book in booksList">
+    <div class="emptyContainer" ng-if="booksList.length <= 0">Book not found!</div>	    
+    <div class="container"  ng-if="booksList.length > 0"  ng-repeat="book in booksList">
     	<div class="row">
     		<div class="col-md-4">
     			 <img id="bookimage" style="width: 10em; margin-left: -3em; border: solid 1px azure;" src="/images/book-default.jpg" alt="" class="center-block img-rounded img-responsive">    			
     		</div>
     		<div class="col-md-6">
     			 <div class="container" style="margin-left: -12em">
+    			 	<p>
+                    	<span style="color:red">{{searchError}}</span>
+                    </p>
 	                <p class="text-left" style="font-size:x-large"><strong>Title: <span>{{book.bookTitle}}</span></strong></p>
 	                <p class="text-left">
 	                    <span class="text-left" style="font-size:medium"><small><b>Author: </b><span>{{book.bookAuthor}}</span></small></span>
