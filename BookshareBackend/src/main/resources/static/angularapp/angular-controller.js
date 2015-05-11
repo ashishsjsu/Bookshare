@@ -2,9 +2,8 @@
 angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
 	.controller("appHome", ["$rootScope", "$scope", "$location", "$state","student", "mapper", "$stateParams", appDashboard])
 	.controller("loginController", ["$rootScope", "$scope", "$location", "$http", "$state", "student", LoginStudent])
-	.controller("signupController", ["$scope", SignupStudent])
 	.controller("booksController", ["$rootScope", "$scope", "$state","student","getBooks",  "mapper", "$stateParams", booksController])
-	
+	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams", bidController])
 	.factory('student', ['$state', '$http', studentFactory])
 	.factory('mapper', ['$state', '$http', mapperFactory])
 	
@@ -45,7 +44,7 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 	.state('home.bidBook', {
 		url: '/home/bidBook',
 		templateUrl: 'templates/partials/bid.html',
-		controller: 'appHome'
+		controller: 'bidController'
 	})
 	.state('home.searchBook', {
 		url: '/home/searchBook/:query',
@@ -54,8 +53,9 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 		resolve: {
 			getBooks: ['$stateParams', 'mapper',
 			           function($stateParams, mapper){
+						 console.log("Bookscontroller resolve: " + $stateParams.query);
 						//this will retrieve the book for search query before the controller is loaded
-					   return mapper.SearchBook($stateParams.query);
+					   	return mapper.SearchBook($stateParams.query);
 			}]
 		}//resolve
 	
@@ -354,4 +354,14 @@ function booksController($rootScope, $scope, $location, $state, student, getBook
 	
 	console.log("Book scope bound " + JSON.stringify($scope.booksList) + JSON.stringify($scope.getBooks.mapperObj.mapper));
 	
+	$scope.loadBiddingPage = function(book){
+		$state.go('home.bidBook', {book: book});
+	}
+	
+}
+
+
+function bidController($rootScope, $scope, $state, $stateParams){
+	
+	console.log("Bid controller loaded " + $stateParams.book);
 }

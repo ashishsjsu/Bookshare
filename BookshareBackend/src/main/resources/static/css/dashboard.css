@@ -349,6 +349,10 @@ p.change_link{
 		 border-radius: 5px;
 }
 
+#dataContainer input{
+	margin-bottom: 1em;
+}
+
 #register{	
 	z-index: 21;
 	opacity: 0;
@@ -432,13 +436,4 @@ p.change_link{
 
 .bidBtns{
 	margin-bottom : 0.2em;
-}
-
-.bidCont{
-	border : solid red 1px;
-	width : 50%;
-}
-
-.bidCont div.input{
-	width : 50%;
 }
