@@ -2,6 +2,9 @@ package cmpe275Project.Controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,15 +32,15 @@ public class BiddingController {
 	TransactionDao transactionDao = new TransactionDaoImpl();
 	
 	// Bid for a Book.
-    @RequestMapping( method = RequestMethod.POST, value = "/bidbook")
-    public @ResponseBody String bidBook(@RequestBody BookBids bookBids){
+    @RequestMapping( method = RequestMethod.POST, value = "/{email}/bidbook")
+    public @ResponseBody String bidBook(@Valid @RequestBody BookBids bookBids, @PathVariable String email){
     			
-			String message = "Success";
-			
-			if(this.checkValidBid(bookBids))
+			String message = "";
+			if(this.checkValidBid(bookBids, email))
 			{
-				BookBids bidsObj = new BookBids(student_id, bookBids.getBookId(), bookBids.getBookTitle(), bookBids.getBidPrice(), bookBids.getBasePrice());
+				BookBids bidsObj = new BookBids(email, bookBids.getBookId(), bookBids.getBookTitle(), bookBids.getBidPrice(), bookBids.getBasePrice());
 				bookBidsDao.addBid(bidsObj);
+				message = "Success";
 			}
 			else
 			{
@@ -49,11 +52,11 @@ public class BiddingController {
     }
     
     //Show all bids for a book
-    @RequestMapping( method = RequestMethod.GET, value = "/listallbids/{id}") //Check URL with team. Book id will be sent 
-    public List<BookBids> listBids(@PathVariable(value = "id")Integer id) {
+    @RequestMapping( method = RequestMethod.GET, value = "{email}/listallbids") //Check URL with team. Book id will be sent 
+    public List<BookBids> listBids(@PathVariable(value = "email")String email) {
 			
-			//checkValidBook(title, author, isbn, price);
-			List<BookBids> bids = bookBidsDao.listBids(id);
+			//checkValidBook(title, authorx, isbn, price);
+			List<BookBids> bids = bookBidsDao.listBids(email);
 		    
 			System.out.println("Bids are " +  bids);
 			return bids;
@@ -100,10 +103,10 @@ public class BiddingController {
     
      
 
-	private boolean checkValidBid(BookBids bookBids) {
+	private boolean checkValidBid(BookBids bookBids, String email) {
 		// TODO Auto-generated method stub
 		
-		if(bookBids.getBidderId()!=null && bookBids.getBookId() != null && bookBids.getBidPrice() > 0.0 )
+		if(email!=null && bookBids.getBookId() != null && bookBids.getBidPrice() > 0.0 )
 		{
 			return true;
 		}
