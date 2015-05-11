@@ -6,9 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "bids")
 public class BookBids {
 	private static int counter = 1;
-	@Id
 	private Integer bidId;
-	private Integer bidderId;
+	private String bidderId;
 	private Integer bookId;
 	private String bookTitle;
 	private float bidPrice;
@@ -18,7 +17,7 @@ public class BookBids {
 		
 	}
 	
-	public BookBids(Integer bidderId, Integer bookId, String bookTitle, float bidPrice, float basePrice){
+	public BookBids(String bidderId, Integer bookId, String bookTitle, float bidPrice, float basePrice){
 		super();
 		bidId = counter++;
 		this.bidderId = bidderId;
@@ -52,11 +51,11 @@ public class BookBids {
 		this.bidPrice = bidPrice;
 	}
 
-	public Integer getBidderId() {
+	public String getBidderId() {
 		return bidderId;
 	}
 
-	public void setBidderId(Integer bidderId) {
+	public void setBidderId(String bidderId) {
 		this.bidderId = bidderId;
 	}
 
