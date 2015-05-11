@@ -9,8 +9,9 @@
 </style>
 
 <div id="wrapper-container">
-    <div id="dataContainer" class="animate form">        
-	    <div class="container" ng-repeat="book in booksList">
+    <div id="dataContainer" class="animate form">  
+		<div class="emptyContainer" ng-if="booksList.length <= 0">User Haven't Posted any Book Yet.</div>
+	    <div class="container" ng-if="booksList.length > 0" ng-repeat="book in booksList">
 	    	<div class="row">
 	    		<div class="col-md-4">
 	    			 <img id="bookimage" style="width: 10em; margin-left: -3em; border: solid 1px azure;" src="/images/book-default.jpg" alt="" class="center-block img-rounded img-responsive">    			
