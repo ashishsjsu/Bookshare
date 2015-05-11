@@ -433,3 +433,12 @@ p.change_link{
 .bidBtns{
 	margin-bottom : 0.2em;
 }
+
+.bidCont{
+	border : solid red 1px;
+	width : 50%;
+}
+
+.bidCont div.input{
+	width : 50%;
+}
