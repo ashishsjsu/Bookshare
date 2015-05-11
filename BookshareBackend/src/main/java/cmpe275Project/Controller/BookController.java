@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.json.simple.JSONArray;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
@@ -72,10 +73,11 @@ public class BookController {
     }
 
         // List of user Books.
-    @RequestMapping( method = RequestMethod.GET, value = "/listUserbooks/{id}")
-    public ResponseEntity<JSONArray> listUserBooks(@PathVariable(value = "id")String id) {
+    @PreAuthorize("permitAll")
+    @RequestMapping( method = RequestMethod.GET, value = "/{email}/books")
+    public ResponseEntity<JSONArray> listUserBooks(@PathVariable(value = "email")String email) {
     	
-    	List<Book> books = bookdao.listUserBooks(id);
+    	List<Book> books = bookdao.listUserBooks(email);
     	JSONArray jsonArray = new JSONArray();
     	for(Book book : books){
     		jsonArray.add(book);
@@ -102,7 +104,7 @@ public class BookController {
     }
     
     // Search for a Book.
-    @RequestMapping( method = RequestMethod.GET, value = "/searchbook/{key}")
+    @RequestMapping( method = RequestMethod.GET, value = "/books/{key}")
     public @ResponseBody ResponseEntity<JSONArray> searchBook(@PathVariable(value = "key")String key) {
     	List<Book> books = bookdao.searchBook(key);
 	System.out.println("1. Search for a book : " + books);

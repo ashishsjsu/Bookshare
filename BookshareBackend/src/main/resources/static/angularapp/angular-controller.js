@@ -117,7 +117,7 @@ function mapperFactory($state, $http){
 	}
 	
 	function ListBook(studentEmail){
-		return $http.get('/listUserbooks/' + studentEmail)
+		return $http.get(studentEmail+'/books/')
 		.success(function(response){
 			//angular.copy(response[0], mapperObj);
 			if(mapperObj.mapper != null || mapperObj.mapper != undefined){
@@ -265,9 +265,6 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
 		$scope.University = student.userObj.university;
 			
 	}
-	$scope.booksList = mapper.mapperObj.mapper;
-		
-	console.log("Book scope :" + JSON.stringify(mapper.mapperObj) +  " " + JSON.stringify($scope.booksList.mapper));
 	
 	$scope.logout = function(){
 		
@@ -285,6 +282,9 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
 		mapperService.History();
 	}
 	
+	$scope.booksList = mapper.mapperObj.mapper;
+	console.log("Book scope :" + JSON.stringify(mapper.mapperObj) +  " " + JSON.stringify($scope.booksList.mapper));
+	
 	$scope.myBooks = function(){
 		mapperService.ListBook(student.userObj.email);
 	}
@@ -301,9 +301,8 @@ function appDashboard($rootScope, $scope, $location, student, mapper, $statePara
     $scope.radioModel = 'New';
     
     $scope.booksList = mapper.mapperObj.mapper;		
-	console.log("Book scope :" + JSON.stringify(mapper.mapperObj) +  " " + JSON.stringify($scope.booksList.mapper));
-	
-	$scope.addBook = function(){
+		
+    $scope.addBook = function(){
 		
         console.log("Calling Addbook " + student.userObj.email + " " +JSON.stringify($scope.newBook));      
         mapperService.AddBook(student.userObj.email, $scope.newBook);

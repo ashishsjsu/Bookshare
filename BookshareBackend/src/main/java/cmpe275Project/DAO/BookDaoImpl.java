@@ -117,8 +117,8 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public List<Book> listUserBooks(String id) {
-		Query query = new Query(Criteria.where("ownerEmail").is(id));
+	public List<Book> listUserBooks(String email) {
+		Query query = new Query(Criteria.where("ownerId").is(email));
 		List<Book> book = mongoOps.find(query, Book.class, Book_COLLECTION);
 		return book;
 	}
