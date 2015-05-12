@@ -35,6 +35,21 @@
 	    		
 	    	</div><!-- row div -->
 	    	<div id="seperator" class="divider" style="border: solid 1px rgb(211, 211, 211); margin-top:1em; margin-bottom:1em"></div>
+	    	
+	    	<!-- Bids Listing -->
+	    	<div class="row">
+	    		<label>Previous Bids on this Book : </label>
+		    	<div id="listContainer" ng-repeat="bid in bids">
+		    		<div ng-class-odd="'cssOdd'">
+			    		<div class="row">
+			    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">Date</div>
+			    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">Bidder Email</div>
+			    			<div class="col-md-4">Bid Price</div>
+			    		</div>
+		    		</div>
+		    	</div>
+	    	</div>
+	    	<!-- End Listing -->
 	    </div>
   	</div>
 </div>
