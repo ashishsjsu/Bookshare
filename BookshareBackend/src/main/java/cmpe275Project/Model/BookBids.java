@@ -12,12 +12,13 @@ public class BookBids {
 	private String bookTitle;
 	private float bidPrice;
 	private float basePrice;
+	private String ownerEmail;
 	
 	public BookBids(){
 		
 	}
 	
-	public BookBids(String bidderId, Integer bookId, String bookTitle, float bidPrice, float basePrice){
+	public BookBids(String bidderId, Integer bookId, String bookTitle, float bidPrice, float basePrice, String ownerEmail){
 		super();
 		bidId = counter++;
 		this.bidderId = bidderId;
@@ -25,6 +26,7 @@ public class BookBids {
 		this.bookTitle = bookTitle;
 		this.bidPrice = bidPrice;
 		this.basePrice = basePrice;
+		this.ownerEmail = ownerEmail;
 	}
 
 	public Integer getBookId() {
@@ -73,5 +75,19 @@ public class BookBids {
 
 	public void setBidId(Integer bidId) {
 		this.bidId = bidId;
+	}
+
+	/**
+	 * @return the ownerEmail
+	 */
+	public String getOwnerEmail() {
+		return ownerEmail;
+	}
+
+	/**
+	 * @param ownerEmail the ownerEmail to set
+	 */
+	public void setOwnerEmail(String ownerEmail) {
+		this.ownerEmail = ownerEmail;
 	}
 }

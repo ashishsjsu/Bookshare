@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,14 +36,18 @@ public class BiddingController {
 	TransactionDao transactionDao = new TransactionDaoImpl();
 	
 	// Bid for a Book.
-    @RequestMapping( method = RequestMethod.POST, value = "/{email}/bidbook")
-    public @ResponseBody String bidBook(@Valid @RequestBody BookBids bookBids, @PathVariable String email){
+    @RequestMapping( method = RequestMethod.POST, value = "/{bidderEmail}/bidbook")
+    public @ResponseBody ResponseEntity<JSONObject> bidBook(@Valid @RequestBody BookBids bookBids, @PathVariable String bidderEmail){
     			
+    		JSONObj json = new JSONObj();
+    		JSONObject bid = null;
+    		
 			String message = "";
-			if(this.checkValidBid(bookBids, email))
+			if(this.checkValidBid(bookBids, bidderEmail))
 			{
-				BookBids bidsObj = new BookBids(email, bookBids.getBookId(), bookBids.getBookTitle(), bookBids.getBidPrice(), bookBids.getBasePrice());
+				BookBids bidsObj = new BookBids(bidderEmail, bookBids.getBookId(), bookBids.getBookTitle(), bookBids.getBidPrice(), bookBids.getBasePrice(), bookBids.getOwnerEmail());
 				bookBidsDao.addBid(bidsObj);
+				bid = json.getBookbidJSON(bidsObj);
 				message = "Success";
 			}
 			else
@@ -47,8 +55,7 @@ public class BiddingController {
 				message = "Invalid BidderId or BookId or Bidding Amount. Check parameters!";
 			}
 			
-			
-			 return message;
+	    	return new ResponseEntity<JSONObject>(bid, HttpStatus.ACCEPTED);
     }
     
     //Show all bids for a book

@@ -28,7 +28,7 @@
 	    			<div style="margin-top:2em">
 	    				<form ng-submit="placeBid()" >
 		    				<input class="form-control" type="number" placeholder="Eg. 10" ng-model="bidPrice"/>
-		    				<input type="button" value="Place your Bid" class="btn btn-info" style="width:100%"/>
+		    				<input type="button" value="Place your Bid" ng-click="placeBid(book)" class="btn btn-info" style="width:100%"/>
 	    				</form>
 	    			</div>
     		    </div>
