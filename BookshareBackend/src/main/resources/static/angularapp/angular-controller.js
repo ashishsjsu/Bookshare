@@ -48,9 +48,21 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 		controller: 'booksListController',
 		resolve: {
 			myBookList: ['$stateParams', 'mapper', 
-						function($stateParams, mapper){
-							console.log("Books list controller resolve " + $stateParams.user);
-							return mapper.ListBook($stateParams.user);
+				function($stateParams, mapper){
+					console.log("Books list controller resolve " + $stateParams.user);
+					return mapper.ListBook($stateParams.user);
+			}]
+		}
+	})
+	.state('home.viewBid', {
+		url: '/home/listBook/:bookid',
+		templateUrl: 'templates/partials/viewBids.html',
+		controller: 'booksListController',
+		resolve: {
+			myBookBidList: ['$stateParams', 'mapper', 
+				function($stateParams, mapper){
+					console.log("Books list controller resolve " + $stateParams.user);
+					return mapper.ListBook($stateParams.user);
 			}]
 		}
 	})

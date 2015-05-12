@@ -441,3 +441,9 @@ p.change_link{
 .cssOdd{
 	background-color : #DDDDDD;
 }
+
+.noBtnType{
+	border : none;
+	opacity : 0.65;
+	background: transparent;
+}
