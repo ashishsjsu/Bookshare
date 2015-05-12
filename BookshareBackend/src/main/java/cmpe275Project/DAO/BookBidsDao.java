@@ -12,6 +12,7 @@ public interface BookBidsDao {
 	public boolean bidIdExist(Integer bidId);
 	public BookBids getBid(Integer bidId);
 	public RentOrBuy getRentOrBuyRecord(Integer bookId);
+	public List<BookBids> listBidsforBook(String title);
 	
 }
 

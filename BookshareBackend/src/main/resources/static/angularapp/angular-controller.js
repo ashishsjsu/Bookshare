@@ -2,7 +2,7 @@
 angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
 	.controller("appHome", ["$rootScope", "$scope", "$location", "$state","student", "mapper", "$stateParams", appDashboard])
 	.controller("loginController", ["$rootScope", "$scope", "$location", "$http", "$state", "student", LoginStudent])
-	.controller("booksController", ["$rootScope", "$scope", "$state","student","getBooks",  "mapper", "resultService", "$stateParams", booksController])
+	.controller("booksController", ["$rootScope", "$scope", "$state","student","getBooks",  "mapper", "resultService", "biddingService", "$stateParams", booksController])
 	.controller("booksListController", ["$rootScope", "$scope", "$state", "myBookList", "mapper", "$stateParams", booksListController])
 	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams", "student","bookToBid", "resultService", "biddingService", bidController])
 	
@@ -242,21 +242,33 @@ function biddingFactory($state, $http){
 	
 	function placeBid(bid){
 		
-		console.log("in bid service");
-		return $http.post(bid.bidderId+"/bidbook", bid).success(function(response){
-			
-			console.log("Book bid placed "  + response);
-			$state.go('home.bidBook');
-				
+		return $http.post(bid.bidderId+"/bidbook", bid)
+		.success(function(response){		
+			$state.go('home.bidBook');			
 		})
 		.error(function(response, status){
 			alert("Error placing bid " + response);
 		})
 	}
 	
+	function listBids(bookTitle){
+		console.log("List bids");
+		return $http.get("/book/"+bookTitle+"/bids").success(function(response){
+			console.log("Bids retrieved " + JSON.stringify(response));
+			
+			for(var i=0; i<response.length; i++){
+				bidObj.bids.push(response[i]);
+			}
+		})
+		.error(function(response, status){
+			alert("Error getting bids " + response);
+		})
+	}
+	
 	return{
 		bidObj: bidObj,
-		placeBid: placeBid
+		placeBid: placeBid,
+		listBids: listBids
 	}
 }
 
@@ -394,7 +406,7 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 }
 
 
-function booksController($rootScope, $scope, $state, student, getBooks, mapper, resultService, $stateParams){
+function booksController($rootScope, $scope, $state, student, getBooks, mapper, resultService, biddingService, $stateParams){
 	
 	//getBooks will return data from service
 	$scope.getBooks = getBooks;
@@ -403,6 +415,9 @@ function booksController($rootScope, $scope, $state, student, getBooks, mapper, 
 	$scope.loadBiddingPage = function(book){
 		//save the search result in service so that it is accessible for bidding 
 		resultService.setSearchResults(book, function(){ $state.go('home.bidBook'); });
+		//retrieve a list of exsting bids on a book
+		biddingService.listBids(resultService.results.bookTitle);
+		
 	}
 	
 }
@@ -421,11 +436,13 @@ function bidController($rootScope, $scope, $state, $stateParams, student, bookTo
 	console.log("Bid controller loaded "  + JSON.stringify(resultService.results));
 	$scope.book = resultService.results;
 	
+	//retrieve a list of exsting bids on a book
+	//biddingService.listBids(resultService.results.bookTitle);
 	
 	
 	$scope.placeBid = function(book){
 
-			var newBid = {"bidPrice" : $scope.bidPrice, "ownerEmail": book.ownerId, "bookId": book.bookId,"bookTitle" : book.bookTitle, "basePrice": book.sellPrice, "bidderId": student.userObj.email};
+			var newBid = {"bidPrice" : $scope.bidPrice, "ownerEmail": book.ownerId, "bookId": book.bookId, "bidDate": new Date(), "bookTitle" : book.bookTitle, "basePrice": book.sellPrice, "bidderId": student.userObj.email};
 			console.log(JSON.stringify(newBid));
 			biddingService.placeBid(newBid);
 	}

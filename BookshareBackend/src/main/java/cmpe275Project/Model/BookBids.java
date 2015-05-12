@@ -8,6 +8,7 @@ public class BookBids {
 	private static int counter = 1;
 	private Integer bidId;
 	private String bidderId;
+	private String bidDate;
 	private Integer bookId;
 	private String bookTitle;
 	private float bidPrice;
@@ -18,11 +19,12 @@ public class BookBids {
 		
 	}
 	
-	public BookBids(String bidderId, Integer bookId, String bookTitle, float bidPrice, float basePrice, String ownerEmail){
+	public BookBids(String bidderId, Integer bookId, String bidDate, String bookTitle, float bidPrice, float basePrice, String ownerEmail){
 		super();
 		bidId = counter++;
 		this.bidderId = bidderId;
 		this.bookId = bookId;
+		this.bidDate = bidDate;
 		this.bookTitle = bookTitle;
 		this.bidPrice = bidPrice;
 		this.basePrice = basePrice;
@@ -89,5 +91,19 @@ public class BookBids {
 	 */
 	public void setOwnerEmail(String ownerEmail) {
 		this.ownerEmail = ownerEmail;
+	}
+
+	/**
+	 * @return the bidDate
+	 */
+	public String getBidDate() {
+		return bidDate;
+	}
+
+	/**
+	 * @param bidDate the bidDate to set
+	 */
+	public void setBidDate(String bidDate) {
+		this.bidDate = bidDate;
 	}
 }

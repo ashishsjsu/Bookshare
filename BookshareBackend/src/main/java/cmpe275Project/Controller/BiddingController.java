@@ -22,6 +22,7 @@ import cmpe275Project.DAO.RentOrBuyDao;
 import cmpe275Project.DAO.RentOrBuyDaoImpl;
 import cmpe275Project.DAO.TransactionDao;
 import cmpe275Project.DAO.TransactionDaoImpl;
+import cmpe275Project.Model.Book;
 import cmpe275Project.Model.BookBids;
 import cmpe275Project.Model.RentOrBuy;
 import cmpe275Project.Model.Transaction;
@@ -45,7 +46,7 @@ public class BiddingController {
 			String message = "";
 			if(this.checkValidBid(bookBids, bidderEmail))
 			{
-				BookBids bidsObj = new BookBids(bidderEmail, bookBids.getBookId(), bookBids.getBookTitle(), bookBids.getBidPrice(), bookBids.getBasePrice(), bookBids.getOwnerEmail());
+				BookBids bidsObj = new BookBids(bidderEmail, bookBids.getBookId(), bookBids.getBidDate(), bookBids.getBookTitle(), bookBids.getBidPrice(), bookBids.getBasePrice(), bookBids.getOwnerEmail());
 				bookBidsDao.addBid(bidsObj);
 				bid = json.getBookbidJSON(bidsObj);
 				message = "Success";
@@ -58,8 +59,27 @@ public class BiddingController {
 	    	return new ResponseEntity<JSONObject>(bid, HttpStatus.ACCEPTED);
     }
     
-    //Show all bids for a book
-    @RequestMapping( method = RequestMethod.GET, value = "{email}/listallbids") //Check URL with team. Book id will be sent 
+    //show all bids for a book
+    @RequestMapping( method = RequestMethod.GET, value = "book/{title}/bids") //Check URL with team. Book id will be sent 
+    public ResponseEntity<JSONArray> listBidsforBook(@PathVariable(value = "title")String title) {
+			
+			//checkValidBook(title, authorx, isbn, price);
+			List<BookBids> bids = bookBidsDao.listBidsforBook(title);
+			JSONArray jsonArray = null;
+			if(bids.size() > 0)
+			{
+				jsonArray = new JSONArray();
+				
+				for(BookBids bid : bids){
+		    		jsonArray.add(bid);
+		    	}
+			}	    		    	
+			return new ResponseEntity<JSONArray>(jsonArray, HttpStatus.OK);
+    }
+    
+    
+    //Show all bids for a user
+    @RequestMapping( method = RequestMethod.GET, value = "{email}/bids") //Check URL with team. Book id will be sent 
     public List<BookBids> listBids(@PathVariable(value = "email")String email) {
 			
 			//checkValidBook(title, authorx, isbn, price);
