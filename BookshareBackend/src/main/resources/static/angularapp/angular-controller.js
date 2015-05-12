@@ -50,7 +50,6 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 		resolve: {
 			bookToBid: ['$stateParams', 'mapper', 'resultService',
 			           function($stateParams, mapper, resultService){
-						
 							return resultService;						 
 			}]
 		}
@@ -390,7 +389,6 @@ function booksController($rootScope, $scope, $state, student, getBooks, mapper, 
 
 
 function bidController($rootScope, $scope, $state, $stateParams, bookToBid, resultService){
-	
 	
 	console.log("Bid controller loaded "  + JSON.stringify(resultService.results));
 	$scope.book = resultService.results;
