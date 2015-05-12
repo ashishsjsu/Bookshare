@@ -3,14 +3,14 @@
 		<div class="container">
 	    	<!-- Bids Listing -->
 	    	<div class="row">
-	    		<label>Previous Bids on this Book </label>
+	    		<label>Available Bids on this Book </label>
 	    		<div class="row" style="background-color: #B6BABF">
-	    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px">{{bid.bidDate}}</div>
-	    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px">{{bid.ownerEmail}}</div>
-	    			<div class="col-md-3">{{bid.bidPrice}}</div>
-	    			<div class="col-md-3"><input type="button" value="Accept"></div>
+	    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px">Bid Date</div>
+	    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px">Bidder</div>
+	    			<div class="col-md-3">Bid Price</div>
+	    			<div class="col-md-3">Accept Bid</div>
 	    		</div>
-		    	<div id="listContainer" ng-repeat="bid in bids">
+		    	<div id="listContainer" ng-repeat="bid in bidList">
 		    		<div ng-class-odd="'cssOdd'">
 			    		<div class="row">
 			    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px">{{bid.bidDate}}</div>
