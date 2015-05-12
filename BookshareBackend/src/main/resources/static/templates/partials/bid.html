@@ -38,7 +38,12 @@
 	    	
 	    	<!-- Bids Listing -->
 	    	<div class="row">
-	    		<label>Previous Bids on this Book : </label>
+	    		<label>Previous Bids on this Book </label>
+	    		<div class="row" style="background-color: #B6BABF">
+	    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">Bid Date</div>
+	    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">Bidder Email</div>
+	    			<div class="col-md-4">Bid</div>
+	    		</div>
 		    	<div id="listContainer" ng-repeat="bid in bids">
 		    		<div ng-class-odd="'cssOdd'">
 			    		<div class="row">
