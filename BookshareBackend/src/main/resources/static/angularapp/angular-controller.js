@@ -414,7 +414,6 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 	    $scope.newBook = {};
 	    $scope.newBook.forBuy = false;
 	    $scope.newBook.forRent = false;
-	    $scope.new
 	    $scope.radioModel = 'New';
 	    $scope.newBook.available = true;
 		mapperService.loadAddBook();
