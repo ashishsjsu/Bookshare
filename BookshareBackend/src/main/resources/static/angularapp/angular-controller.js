@@ -2,10 +2,12 @@
 angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
 	.controller("appHome", ["$rootScope", "$scope", "$location", "$state","student", "mapper", "$stateParams", appDashboard])
 	.controller("loginController", ["$rootScope", "$scope", "$location", "$http", "$state", "student", LoginStudent])
-	.controller("booksController", ["$rootScope", "$scope", "$state","student","getBooks",  "mapper", "$stateParams", booksController])
-	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams", bidController])
+	.controller("booksController", ["$rootScope", "$scope", "$state","student","getBooks",  "mapper", "resultService", "$stateParams", booksController])
+	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams","bookToBid", "resultService", bidController])
+	
 	.factory('student', ['$state', '$http', studentFactory])
 	.factory('mapper', ['$state', '$http', mapperFactory])
+	.factory('resultService', ['$state', '$http', searchResultFactory])
 	
 	.config(['$stateProvider', '$urlRouterProvider', appConfigHandler]);
 
@@ -42,9 +44,16 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 		controller: 'appHome'
 	})
 	.state('home.bidBook', {
-		url: '/home/bidBook',
+		url: '/home/bidBook/:bookid',
 		templateUrl: 'templates/partials/bid.html',
-		controller: 'bidController'
+		controller: 'bidController',
+		resolve: {
+			bookToBid: ['$stateParams', 'mapper', 'resultService',
+			           function($stateParams, mapper, resultService){
+						
+							return resultService;						 
+			}]
+		}
 	})
 	.state('home.searchBook', {
 		url: '/home/searchBook/:query',
@@ -67,6 +76,27 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 	})
 	
 	$urlRouterProvider.otherwise('/login');
+}
+
+
+//save book search result in this factory
+function searchResultFactory($state, $http){
+	
+	var results = {};
+	
+	function setSearchResults(bookResult, success){
+		angular.copy(bookResult, results);
+		success();
+	}
+	
+	function getSavedSearch(){
+		 return results;
+	}
+	
+	return{
+		results: results,
+		setSearchResults: setSearchResults 
+	}
 }
 
 //student factory callback method
@@ -176,7 +206,6 @@ function mapperFactory($state, $http){
 	function SearchBook(keyval){
 		return $http.get('/books/' + keyval)
 		.success(function(response){
-			console.log("Logged user search : " + JSON.stringify(response));
 			if(mapperObj.mapper != null || mapperObj.mapper != undefined){
 				mapperObj.mapper = [];
 				console.log("Cleared");
@@ -346,22 +375,23 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 }
 
 
-function booksController($rootScope, $scope, $location, $state, student, getBooks, mapper, $stateParams){
+function booksController($rootScope, $scope, $state, student, getBooks, mapper, resultService, $stateParams){
 	
 	//getBooks will return data from service
 	$scope.getBooks = getBooks;
-	$scope.booksList = $scope.getBooks.mapperObj.mapper;
-	
-	console.log("Book scope bound " + JSON.stringify($scope.booksList) + JSON.stringify($scope.getBooks.mapperObj.mapper));
+	$scope.booksList = mapper.mapperObj.mapper;
 	
 	$scope.loadBiddingPage = function(book){
-		$state.go('home.bidBook', {book: book});
+		//save the search result in service so that it is accessible for bidding 
+		resultService.setSearchResults(book, function(){ $state.go('home.bidBook'); });
 	}
 	
 }
 
 
-function bidController($rootScope, $scope, $state, $stateParams){
+function bidController($rootScope, $scope, $state, $stateParams, bookToBid, resultService){
 	
-	console.log("Bid controller loaded " + $stateParams.book);
+	
+	console.log("Bid controller loaded "  + JSON.stringify(resultService.results));
+	$scope.book = resultService.results;
 }
