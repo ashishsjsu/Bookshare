@@ -390,13 +390,7 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 		$state.go('home.searchBook', {query : $scope.keyval});
 		//$scope.keyval = "";
 	}
-
-	//scope  params for adding a book
-    $scope.newBook = {};
-    $scope.newBook.forBuy = false;
-    $scope.newBook.forRent = false;
-    $scope.radioModel = 'New';
-    
+  
     $scope.booksList = mapper.mapperObj.mapper;		
 		
     $scope.addBook = function(){		
@@ -404,6 +398,13 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 	}
 	
 	$scope.loadAddBook = function(){
+		//scope  params for adding a book
+	    $scope.newBook = {};
+	    $scope.newBook.forBuy = false;
+	    $scope.newBook.forRent = false;
+	    $scope.new
+	    $scope.radioModel = 'New';
+	    $scope.newBook.available = true;
 		mapperService.loadAddBook();
 	}
 }

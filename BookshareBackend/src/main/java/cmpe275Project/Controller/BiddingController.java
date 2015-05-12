@@ -60,10 +60,9 @@ public class BiddingController {
     }
     
     //show all bids for a book
-    @RequestMapping( method = RequestMethod.GET, value = "book/{title}/bids") //Check URL with team. Book id will be sent 
+    @RequestMapping( method = RequestMethod.GET, value = "book/{title}/bids")
     public ResponseEntity<JSONArray> listBidsforBook(@PathVariable(value = "title")String title) {
 			
-			//checkValidBook(title, authorx, isbn, price);
 			List<BookBids> bids = bookBidsDao.listBidsforBook(title);
 			JSONArray jsonArray = null;
 			if(bids.size() > 0)
@@ -79,11 +78,10 @@ public class BiddingController {
     
     
     //Show all bids for a user
-    @RequestMapping( method = RequestMethod.GET, value = "{email}/bids") //Check URL with team. Book id will be sent 
+    @RequestMapping( method = RequestMethod.GET, value = "student/{email}/bids") //Check URL with team. Book id will be sent 
     public List<BookBids> listBids(@PathVariable(value = "email")String email) {
 			
-			//checkValidBook(title, authorx, isbn, price);
-			List<BookBids> bids = bookBidsDao.listBids(email);
+			List<BookBids> bids = bookBidsDao.listBidsbyUser(email);
 		    
 			System.out.println("Bids are " +  bids);
 			return bids;
