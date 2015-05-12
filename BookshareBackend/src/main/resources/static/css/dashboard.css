@@ -437,3 +437,7 @@ p.change_link{
 .bidBtns{
 	margin-bottom : 0.2em;
 }
+
+.cssOdd{
+	background-color : #DDDDDD;
+}
