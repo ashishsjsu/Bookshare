@@ -417,7 +417,6 @@ function booksController($rootScope, $scope, $state, student, getBooks, mapper, 
 		resultService.setSearchResults(book, function(){ $state.go('home.bidBook'); });
 		//retrieve a list of exsting bids on a book
 		biddingService.listBids(resultService.results.bookTitle);
-		
 	}
 	
 }
@@ -438,7 +437,7 @@ function bidController($rootScope, $scope, $state, $stateParams, student, bookTo
 	
 	//retrieve a list of exsting bids on a book
 	//biddingService.listBids(resultService.results.bookTitle);
-	
+	$scope.bids = biddingService.bidObj.bids;
 	
 	$scope.placeBid = function(book){
 

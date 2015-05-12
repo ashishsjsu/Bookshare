@@ -24,7 +24,7 @@ public class SqlConfig {
                 
                 String url = "jdbc:mysql://localhost:3306/BookshareDB";
                 String user = "root";
-                String password = "root";
+                String password = "Neeru";
                 
                 try {
 					Class.forName("com.mysql.jdbc.Driver");
