@@ -4,7 +4,7 @@ angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
 	.controller("loginController", ["$rootScope", "$scope", "$location", "$http", "$state", "student", LoginStudent])
 	.controller("booksController", ["$rootScope", "$scope", "$state","student","getBooks",  "mapper", "resultService", "biddingService", "$stateParams", booksController])
 	.controller("booksListController", ["$rootScope", "$scope", "$state", "myBookList", "mapper", "$stateParams", booksListController])
-	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams", "student","bookToBid", "resultService", "biddingService", bidController])
+	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams", "student","bookToBid", "oldBids", "resultService", "biddingService", bidController])
 	
 	.factory('student', ['$state', '$http', studentFactory])
 	.factory('mapper', ['$state', '$http', mapperFactory])
@@ -55,13 +55,19 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 		}
 	})
 	.state('home.bidBook', {
-		url: '/home/bidBook/:bookid',
+		url: '/home/bidBook/:bookId',
 		templateUrl: 'templates/partials/bid.html',
 		controller: 'bidController',
 		resolve: {
 			bookToBid: ['$stateParams', 'mapper', 'resultService',
 			           function($stateParams, mapper, resultService){
 							return resultService;						 
+			}],
+			oldBids: ['$stateParams', 'biddingService', 
+			          function($stateParams, biddingService){
+							console.log("home.bidbbok resolve " + $stateParams.bookId);
+							//retrieve a list of exsting bids on a book
+							return biddingService.listBids($stateParams.bookId);
 			}]
 		}
 	})
@@ -248,8 +254,9 @@ function biddingFactory($state, $http){
 	function placeBid(bid){
 		
 		return $http.post(bid.bidderId+"/bidbook", bid)
-		.success(function(response){		
-			$state.go('home.bidBook');			
+		.success(function(response){				
+			listBids(bid.bookTitle);
+			$state.go('home.bidBook');				
 		})
 		.error(function(response, status){
 			alert("Error placing bid " + response);
@@ -260,10 +267,15 @@ function biddingFactory($state, $http){
 		console.log("List bids");
 		return $http.get("/book/"+bookTitle+"/bids").success(function(response){
 			console.log("Bids retrieved " + JSON.stringify(response));
-			
+			if(bidObj.bids != null || bidObj.bids != undefined){
+				bidObj.bids = [];
+				console.log("Cleared");
+			}
 			for(var i=0; i<response.length; i++){
 				bidObj.bids.push(response[i]);
 			}
+			console.log("Bids pushed " + JSON.stringify(response));
+			
 		})
 		.error(function(response, status){
 			alert("Error getting bids " + response);
@@ -419,9 +431,7 @@ function booksController($rootScope, $scope, $state, student, getBooks, mapper, 
 	
 	$scope.loadBiddingPage = function(book){
 		//save the search result in service so that it is accessible for bidding 
-		resultService.setSearchResults(book, function(){ $state.go('home.bidBook'); });
-		//retrieve a list of exsting bids on a book
-		biddingService.listBids(resultService.results.bookTitle);
+		resultService.setSearchResults(book, function(){ $state.go('home.bidBook', { bookId : book.bookTitle}); });
 	}
 }
 
@@ -434,18 +444,21 @@ function booksListController($rootScope, $scope, $state, myBookList, mapper, $st
 }
 
 // Controller for bidding on Books.
-function bidController($rootScope, $scope, $state, $stateParams, student, bookToBid, resultService, biddingService){
+function bidController($rootScope, $scope, $state, $stateParams, student, bookToBid, oldBids, resultService, biddingService){
 	
-	console.log("Bid controller loaded "  + JSON.stringify(resultService.results));
-	$scope.book = resultService.results;
-	
-	//retrieve a list of exsting bids on a book
-	//biddingService.listBids(resultService.results.bookTitle);
+	console.log("Bid controller loaded "  + JSON.stringify(biddingService.bidObj.bids));
 	$scope.bids = biddingService.bidObj.bids;
+	$scope.book = resultService.results;
 	
 	$scope.placeBid = function(book){
 		var newBid = {"bidPrice" : $scope.bidPrice, "ownerEmail": book.ownerId, "bookId": book.bookId, "bidDate": new Date(), "bookTitle" : book.bookTitle, "basePrice": book.sellPrice, "bidderId": student.userObj.email};
 		console.log(JSON.stringify(newBid));
 		biddingService.placeBid(newBid);
+		$scope.bidPrice = "";
+	}
+	
+	$scope.refreshBids = function(){
+		console.log("refresh bids");
+		$scope.bids = biddingService.bidObj.bids;
 	}
 }

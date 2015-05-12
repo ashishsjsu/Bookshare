@@ -1,7 +1,11 @@
 package cmpe275Project.Model;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Document(collection = "bids")
 public class BookBids {

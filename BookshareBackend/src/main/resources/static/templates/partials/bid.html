@@ -27,7 +27,7 @@
 	    		<div class="col-md-2">
 	    			<div style="margin-top:2em">
 	    				<form ng-submit="placeBid()" >
-		    				<input class="form-control" type="number" placeholder="Eg. 10" ng-model="bidPrice"/>
+		    				<input class="form-control" required="required" type="number" placeholder="Eg. 10" ng-model="bidPrice"/>
 		    				<input type="button" value="Place your Bid" ng-click="placeBid(book)" class="btn btn-info" style="width:100%"/>
 	    				</form>
 	    			</div>
@@ -38,17 +38,18 @@
 	    	
 	    	<!-- Bids Listing -->
 	    	<div class="row">
-	    		<label>Previous Bids on this Book </label>
+	    		<label>Previous Bids on this Book  </label><button ng-click="refreshBids()" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-refresh"></span></button>
 	    		<div class="row" style="background-color: #B6BABF">
 	    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">Bid Date</div>
 	    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">Bidder Email</div>
 	    			<div class="col-md-4">Bid</div>
+	    			
 	    		</div>
 		    	<div id="listContainer" ng-repeat="bid in bids">
 		    		<div ng-class-odd="'cssOdd'">
 			    		<div class="row">
 			    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">{{bid.bidDate}}</div>
-			    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">{{bid.ownerEmail}}</div>
+			    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">{{bid.bidderId}}</div>
 			    			<div class="col-md-4">{{bid.bidPrice}}</div>
 			    		</div>
 		    		</div>
