@@ -3,8 +3,9 @@ angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
 	.controller("appHome", ["$rootScope", "$scope", "$location", "$state","student", "mapper", "$stateParams", appDashboard])
 	.controller("loginController", ["$rootScope", "$scope", "$location", "$http", "$state", "student", LoginStudent])
 	.controller("booksController", ["$rootScope", "$scope", "$state","student","getBooks",  "mapper", "resultService", "biddingService", "$stateParams", booksController])
-	.controller("booksListController", ["$rootScope", "$scope", "$state", "myBookList", "mapper", "$stateParams", booksListController])
+	.controller("booksListController", ["$rootScope", "$scope", "$state", "myBookList", "biddingService", "mapper", "$stateParams", booksListController])
 	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams", "student","bookToBid", "resultService", "biddingService", bidController])
+	.controller("booksBidController", ["$rootScope", "$scope", "$state", "myBookBidList", "biddingService", "mapper", "$stateParams", booksBidController])
 	
 	.factory('student', ['$state', '$http', studentFactory])
 	.factory('mapper', ['$state', '$http', mapperFactory])
@@ -55,14 +56,14 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 		}
 	})
 	.state('home.viewBid', {
-		url: '/home/listBook/:bookid',
+		url: '/home/:book/bids',
 		templateUrl: 'templates/partials/viewBids.html',
-		controller: 'booksListController',
+		controller: 'booksBidController',
 		resolve: {
-			myBookBidList: ['$stateParams', 'mapper', 
-				function($stateParams, mapper){
-					console.log("Books list controller resolve " + $stateParams.user);
-					return mapper.ListBook($stateParams.user);
+			myBookBidList: ['$stateParams', 'biddingService',
+				function($stateParams,biddingService){
+					console.log("Bid list controller resolve " + $stateParams.book);
+					return biddingService.ListBids($stateParams.book);
 			}]
 		}
 	})
@@ -137,9 +138,9 @@ function studentFactory($state, $http){
 	function Login(student, success, failure){
 		
         return $http.post("/login", "username=" + student.email +
-            "&password=" + student.password, {
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        })
+            		"&password=" + student.password, {
+                	headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        	})
 		.success(function(response){
 			 
 			localStorage.setItem("session", {});		 
@@ -174,7 +175,6 @@ function studentFactory($state, $http){
 		registerStudent : registerStudent
 	};
 }
-
 
 //mapper factory callback method
 function mapperFactory($state, $http){
@@ -228,12 +228,12 @@ function mapperFactory($state, $http){
 	function AddBook(currUser, book){
 		return $http.post("/"+ currUser +"/book", book)
 		.success(function(response){
-            console.log("New book added " + JSON.stringify(response));
-            $state.go('home.listBook', {user : currUser});
-        })
-        .error(function(response, status){
-            alert("Error adding a book "  + JSON.stringify(response));
-        })
+            		console.log("New book added " + JSON.stringify(response));
+            		$state.go('home.listBook', {user : currUser});
+        	})
+        	.error(function(response, status){
+            		alert("Error adding a book "  + JSON.stringify(response));
+        	})
 	}
 	
 	function History(){
@@ -272,7 +272,10 @@ function biddingFactory($state, $http){
 		console.log("List bids");
 		return $http.get("/book/"+bookTitle+"/bids").success(function(response){
 			console.log("Bids retrieved " + JSON.stringify(response));
-			
+			if(bidObj.bids != null || bidObj.bids != undefined){
+				bidObj.bids = [];
+				console.log("Cleared");
+			}
 			for(var i=0; i<response.length; i++){
 				bidObj.bids.push(response[i]);
 			}
@@ -297,10 +300,8 @@ function biddingFactory($state, $http){
 function LoginStudent($rootScope, $scope, $location, $http, $state, studentservice){
 	
 	var studentService = studentservice;
-
 	//student login function
 	 $scope.LoginStudent = function(){
-		 
 		 studentService.Login(
 			$scope.student, 
 			function() { 
@@ -437,11 +438,23 @@ function booksController($rootScope, $scope, $state, student, getBooks, mapper, 
 }
 
 
-function booksListController($rootScope, $scope, $state, myBookList, mapper, $stateParams){
+function booksListController($rootScope, $scope, $state, myBookList, biddingService, mapper, $stateParams){
 	
 	//getBooks will return data from service
 	console.log("bookListController loaded " + JSON.stringify(myBookList)  + "  " + JSON.stringify(mapper.mapperObj.mapper));
+
 	$scope.booksList = mapper.mapperObj.mapper;
+	//$scope.bidsList = biddingService.bidObj.bids;
+	
+	$scope.displayBids = function(bookName){
+		console.log('bids clicked');
+		$state.go("home.viewBid", {book:bookName});
+	}
+}
+
+function booksBidController($rootScope, $scope, $state, myBookBidList, biddingService, mapper, $stateParams){
+	console.log("bookListController loaded " + JSON.stringify(biddingService.bidObj.bids));
+	$scope.bidsList = biddingService.bidObj.bids;
 }
 
 // Controller for bidding on Books.
