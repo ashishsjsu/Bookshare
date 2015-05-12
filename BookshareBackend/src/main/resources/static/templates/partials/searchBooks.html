@@ -43,15 +43,14 @@
             	</div>
     		</div>
     		<div class="col-md-2">
-	            <div class="row" style="margin-top:2em">
-	                <div class="bidBtns"><input class="btn btn-primary btn-block" ng-if="book.forBuy==true" type="button" value="Buy"></div>
-	                <div class="bidBtns"><input class="btn btn-warning btn-block" ng-click="loadBiddingPage(book)" type="button" value="Bid"></div>
-	                <div><input class="btn btn-success btn-block" ng-if="book.forRent==true" type="button" value="Rent"></div>
+	            <div class="row" style="margin-top : 0.2em">
+	                <div class="bidBtns"><input class="btn btn-primary btn-block" ng-if="book.forBuy==true" type="button" value="Buy" ng-disabled="book.ownerId == AuthUser"></div>
+	                <div class="bidBtns"><input class="btn btn-warning btn-block" ng-click="loadBiddingPage(book)" type="button" value="Bid" ng-disabled="book.ownerId == AuthUser"></div>
+	                <div><input class="btn btn-success btn-block" ng-if="book.forRent==true" type="button" value="Rent" ng-disabled="book.ownerId == AuthUser"></div>
 	            </div>
-	            
-        </div>
+        	</div>
     	</div><!-- row div -->
-    	 <div id="seperator" class="divider" style="border: solid 1px rgb(211, 211, 211); margin-top:1em; margin-bottom:1em"></div>
+    	 <div id="seperator" class="divider" style="border: solid 1px rgb(211, 211, 211); margin-top : 0.1em; margin-bottom : 0.1em"></div>
     </div>
   </div>
 </div>

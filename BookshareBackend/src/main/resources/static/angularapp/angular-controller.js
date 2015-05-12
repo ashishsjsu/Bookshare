@@ -13,6 +13,8 @@ angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
 	
 	.config(['$stateProvider', '$urlRouterProvider', appConfigHandler]);
 
+/*========================================== STATES START ============================================*/ 
+
 function appConfigHandler($stateProvider, $urlRouterProvider){
 	$stateProvider
     	.state('login', {
@@ -86,7 +88,9 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 	$urlRouterProvider.otherwise('/login');
 }
 
-/*================================= SERVICES ===========================================*/
+/*========================================== STATES End ================================================*/
+
+/*========================================= SERVICES Start =============================================*/
 
 //save book search result in this factory
 function searchResultFactory($state, $http){
@@ -121,9 +125,9 @@ function studentFactory($state, $http){
 	function Login(student, success, failure){
 		
         return $http.post("/login", "username=" + student.email +
-                "&password=" + student.password, {
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                } )
+            "&password=" + student.password, {
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        })
 		.success(function(response){
 			 
 			localStorage.setItem("session", {});		 
@@ -237,8 +241,9 @@ function mapperFactory($state, $http){
 
 
 function biddingFactory($state, $http){
-	
-	var bidObj = { bids:[] };
+	var bidObj = { 
+		bids : [] 
+	};
 	
 	function placeBid(bid){
 		
@@ -272,7 +277,7 @@ function biddingFactory($state, $http){
 	}
 }
 
-
+/*========================================== SERVICES End ==============================================*/
 
 
 /*========================================== CONTROLLERS ===============================================*/
@@ -284,8 +289,35 @@ function LoginStudent($rootScope, $scope, $location, $http, $state, studentservi
 	//student login function
 	 $scope.LoginStudent = function(){
 		 
-		 studentService.Login($scope.student, function()
-				 { 
+		 studentService.Login(
+			$scope.student, 
+			function() { 
+	 			$rootScope.isAuthenticated = true; 	 			
+	 			$http.get("/login").success(function(response) {
+	 				angular.copy(response, studentService.userObj);
+	 				$state.go("home");
+	 			})
+	 			.error(function(response, status){
+	 				alert("Error retrieving user");
+	 			});
+			 }, 
+			 function() { 
+				if(studentService.userObj.error == "LoginErr") {
+					$scope.errorMsg = "Login failed. Invalid Email/password combination.";
+					$rootScope.authenticated = false;
+				}
+			 }	
+		 )
+	}
+	 
+	 
+	 $scope.registerStudent = function(){
+		 studentService.registerStudent(
+			 $scope.signup, 
+			 function(){
+			 	studentService.Login(
+		 			$scope.signup, 
+		 			function(){ 
 			 			$rootScope.isAuthenticated = true; 	 			
 			 			$http.get("/login").success(function(response){
 			 				angular.copy(response, studentService.userObj);
@@ -294,42 +326,18 @@ function LoginStudent($rootScope, $scope, $location, $http, $state, studentservi
 			 			.error(function(response, status){
 			 				alert("Error retrieving user");
 			 			});
-				 }, 
-				 function(){ 
-			 
-						if(studentService.userObj.error == "LoginErr")
-						{
-							$scope.errorMsg = "Login failed. Invalid Email/password combination.";
-							$rootScope.authenticated = false;
-						}			 
-		 })
-	}
-	 
-	 
-	 $scope.registerStudent = function(){
-		 
-		 studentService.registerStudent($scope.signup, function(){
-			 
-			 studentService.Login($scope.signup, function(){ 
-	 			$rootScope.isAuthenticated = true; 	 			
-	 			$http.get("/login").success(function(response){
-	 				angular.copy(response, studentService.userObj);
-	 				$state.go("home");
-	 			})
-	 			.error(function(response, status){
-	 				alert("Error retrieving user");
-	 			});
-			})
-		 }, 
-		 function(){
-			 if(studentService.userObj.error == "LoginErr"){
-				$scope.errorMsg = "Login failed. Invalid Email/password combination.";
-				$rootScope.authenticated = false;
-			 }
-		 })
+					}
+		 		)
+		 	}, 
+			function(){
+				if(studentService.userObj.error == "LoginErr"){
+					$scope.errorMsg = "Login failed. Invalid Email/password combination.";
+					$rootScope.authenticated = false;
+				}
+			}
+	 	)
 	 }
 
-	 
 	 $scope.loadSignup = function(){
 		 console.log("Signup controller");
 		 studentService.LoadSignup()
@@ -356,11 +364,9 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 		$scope.Email = student.userObj.email;
 		$scope.Phone = student.userObj.phone;
 		$scope.University = student.userObj.university;
-			
 	}
 	
 	$scope.logout = function(){
-		
 		$rootScope.isAuthenticated = false;
 		localStorage.removeItem("session");
 		student.userObj = null;
@@ -374,8 +380,6 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 	$scope.history = function(){
 		mapperService.History();
 	}
-	
-	//$scope.booksList = mapper.mapperObj.mapper;
 	
 	$scope.myBooks = function(){
 		//mapperService.ListBook(student.userObj.email);
@@ -395,8 +399,7 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
     
     $scope.booksList = mapper.mapperObj.mapper;		
 		
-    $scope.addBook = function(){
-		
+    $scope.addBook = function(){		
         mapperService.AddBook(student.userObj.email, $scope.newBook);
 	}
 	
@@ -405,12 +408,13 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 	}
 }
 
-
+// Controller for Books 
 function booksController($rootScope, $scope, $state, student, getBooks, mapper, resultService, biddingService, $stateParams){
 	
 	//getBooks will return data from service
 	$scope.getBooks = getBooks;
 	$scope.booksList = mapper.mapperObj.mapper;
+	$scope.AuthUser = student.userObj.email;
 	
 	$scope.loadBiddingPage = function(book){
 		//save the search result in service so that it is accessible for bidding 
@@ -418,7 +422,6 @@ function booksController($rootScope, $scope, $state, student, getBooks, mapper, 
 		//retrieve a list of exsting bids on a book
 		biddingService.listBids(resultService.results.bookTitle);
 	}
-	
 }
 
 
@@ -427,9 +430,9 @@ function booksListController($rootScope, $scope, $state, myBookList, mapper, $st
 	//getBooks will return data from service
 	console.log("bookListController loaded " + JSON.stringify(myBookList)  + "  " + JSON.stringify(mapper.mapperObj.mapper));
 	$scope.booksList = mapper.mapperObj.mapper;
-	
 }
 
+// Controller for bidding on Books.
 function bidController($rootScope, $scope, $state, $stateParams, student, bookToBid, resultService, biddingService){
 	
 	console.log("Bid controller loaded "  + JSON.stringify(resultService.results));
@@ -440,9 +443,8 @@ function bidController($rootScope, $scope, $state, $stateParams, student, bookTo
 	$scope.bids = biddingService.bidObj.bids;
 	
 	$scope.placeBid = function(book){
-
-			var newBid = {"bidPrice" : $scope.bidPrice, "ownerEmail": book.ownerId, "bookId": book.bookId, "bidDate": new Date(), "bookTitle" : book.bookTitle, "basePrice": book.sellPrice, "bidderId": student.userObj.email};
-			console.log(JSON.stringify(newBid));
-			biddingService.placeBid(newBid);
+		var newBid = {"bidPrice" : $scope.bidPrice, "ownerEmail": book.ownerId, "bookId": book.bookId, "bidDate": new Date(), "bookTitle" : book.bookTitle, "basePrice": book.sellPrice, "bidderId": student.userObj.email};
+		console.log(JSON.stringify(newBid));
+		biddingService.placeBid(newBid);
 	}
 }
