@@ -48,7 +48,7 @@ public class BookController {
                     throw new Exceptions.InvalidRequestBodyException();
                 }
                 
-                Book bookLocal = new Book(email, book.getBookTitle(), book.getBookAuthor(), book.getBookISBN(), book.getBookDesc(), book.getBookCondition(), book.getRentPrice(), book.getSellPrice(), book.isForBuy(), book.isForRent(), book.getRentDuration());
+                Book bookLocal = new Book(email, book.getBookTitle(), book.getBookAuthor(), book.getBookISBN(), book.getBookDesc(), book.getBookCondition(), book.getRentPrice(), book.getSellPrice(), book.isForBuy(), book.isForRent(), book.getRentDuration(), book.isAvailable());
                 checkValidBook(bookLocal);
                         
                 bookdao.createBook(bookLocal);

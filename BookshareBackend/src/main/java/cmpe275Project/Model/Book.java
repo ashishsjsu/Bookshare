@@ -43,8 +43,10 @@ public class Book {
 	private boolean forBuy;
 	@JsonView(Integer.class)
 	private Integer rentDuration;
+	@JsonView(Boolean.class)
+	private boolean available;
 	
-	public Book(String ownerId, String bookTitle, String bookAuthor, String bookISBN, String bookDesc, String bookCondition, Integer rentPrice, Integer sellPrice, Boolean forBuy, Boolean forRent, Integer rentDuration){
+	public Book(String ownerId, String bookTitle, String bookAuthor, String bookISBN, String bookDesc, String bookCondition, Integer rentPrice, Integer sellPrice, Boolean forBuy, Boolean forRent, Integer rentDuration, Boolean available){
 		super();
 		bookId = counter++;
 		this.ownerId = ownerId;
@@ -58,6 +60,7 @@ public class Book {
 		this.forBuy = forBuy;
 		this.forRent = forRent;
 		this.rentDuration = rentDuration;
+		this.available = available;
 	}
 	
 	public Book()
@@ -189,5 +192,19 @@ public class Book {
 	 */
 	public void setRentDuration(Integer rentDuration) {
 		this.rentDuration = rentDuration;
+	}
+
+	/**
+	 * @return the available
+	 */
+	public boolean isAvailable() {
+		return available;
+	}
+
+	/**
+	 * @param available the available to set
+	 */
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 }

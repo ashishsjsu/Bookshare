@@ -3,6 +3,7 @@ package cmpe275Project.DAO;
 import java.util.List;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -41,10 +42,10 @@ public class BookBidsDaoImpl implements BookBidsDao {
 		mongoOps.insert(bookBids);
 	}
 	@Override
-	public List<BookBids> listBids(String email) {
-		// TODO Auto-generated method stub
+	public List<BookBids> listBidsbyUser(String email) {
 		
 		Query query = new Query(Criteria.where("bidderId").is(email));
+		query.with(new Sort(Sort.Direction.ASC, "bookTitle"));
 		List<BookBids> bids = mongoOps.find(query, BookBids.class);
 		return bids;
 	}
