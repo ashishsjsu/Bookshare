@@ -100,7 +100,7 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public List<Book> searchBook(String searchkey) {
 		// TODO Auto-generated method stub
-		Query query = new Query(Criteria.where("bookTitle").is(searchkey));
+		Query query = new Query(Criteria.where("bookTitle").is(searchkey).andOperator(Criteria.where("available").is(true)));
 		List<Book> book = mongoOps.find(query, Book.class, Book_COLLECTION);
 		if(book.size() != 0){
 			return book;

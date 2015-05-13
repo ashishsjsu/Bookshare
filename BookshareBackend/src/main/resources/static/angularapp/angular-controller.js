@@ -319,6 +319,15 @@ function biddingFactory($state, $http){
 		});
 	}
 	
+	function buyBook(book){
+		return $http.post("/book/"+book.bookTitle+"/buy", book).success(function(response){
+			console.log("Book bought/sold " + JSON.stringify(response));
+		})
+		.error(function(response, status){
+			alert("Error buying "+ JSON.stringify(response));
+		})
+	}	
+	
 	return{
 		bidObj: bidObj,
 		placeBid: placeBid,
@@ -470,12 +479,19 @@ function booksController($rootScope, $scope, $state, student, getBooks, mapper, 
 	//getBooks will return data from service
 	$scope.keyval = "";
 	$scope.getBooks = getBooks;
-	$scope.booksList = mapper.mapperObj.mapper;
+	if(mapper.mapperObj.mapper != null || mapper.mapperObj.mapper != undefined){
+		$scope.booksList = mapper.mapperObj.mapper;
+	}
+
 	$scope.AuthUser = student.userObj.email;
 	
 	$scope.loadBiddingPage = function(book){
 		//save the search result in service so that it is accessible for bidding 
 		resultService.setSearchResults(book, function(){ $state.go('home.bidBook', { bookId : book.bookTitle}); });
+	}
+	
+	$scope.buyBook = function(book){
+		biddingService.buyBook(book);
 	}
 }
 
@@ -495,8 +511,12 @@ function booksListController($rootScope, $scope, $state, myBookList, biddingServ
 }
 
 function booksBidController($rootScope, $scope, $state, myBookBidList, biddingService, mapper, $stateParams){
-	$scope.bidsList = biddingService.bidObj.bids;
 	
+	if(biddingService.bidObj != null || biddingService.bidObj != undefined){
+			$scope.bidsList = biddingService.bidObj.bids;
+	}
+	//bind book title
+	$scope.bookTitle = $stateParams.book;
 	$scope.acceptBid = function(bid){
 		console.log("Accept bid " + JSON.stringify(bid));
 		biddingService.acceptBid(bid);

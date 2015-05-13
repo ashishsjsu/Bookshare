@@ -44,7 +44,7 @@
     		</div>
     		<div class="col-md-2">
 	            <div class="row" style="margin-top : 0.2em">
-	                <div class="bidBtns"><input class="btn btn-primary btn-block" ng-if="book.forBuy==true" type="button" value="Buy" ng-disabled="book.ownerId == AuthUser"></div>
+	                <div class="bidBtns"><input class="btn btn-primary btn-block" ng-click="buyBook(book)" ng-if="book.forBuy==true" type="button" value="Buy" ng-disabled="book.ownerId == AuthUser"></div>
 	                <div class="bidBtns"><input class="btn btn-warning btn-block" ng-click="loadBiddingPage(book)" type="button" value="Bid" ng-disabled="book.ownerId == AuthUser"></div>
 	                <div><input class="btn btn-success btn-block" ng-if="book.forRent==true" type="button" value="Rent" ng-disabled="book.ownerId == AuthUser"></div>
 	            </div>

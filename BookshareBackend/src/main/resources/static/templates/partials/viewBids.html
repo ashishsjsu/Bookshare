@@ -3,7 +3,7 @@
 		<div class="container">
 	    	<!-- Bids Listing -->
 	    	<div class="row">
-	    		<label>Available Bids on this Book </label>
+	    		<label>Available Bids on book: <span>{{bookTitle}}</span> </label>
 	    		<div class="emptyContainer" ng-if="bidsList.length <= 0">No bids till now!</div>
 	    		<div class="row" ng-if="bidsList.length > 0" style="background-color: #B6BABF">
 	    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px">Bid Date</div>
@@ -11,13 +11,13 @@
 	    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px">Bid Price</div>
 	    			<div class="col-md-3">Accept Bid</div>
 	    		</div>
-		    	<div id="listContainer" ng-repeat="bid in bidsList">
+		    	<div id="listContainer" ng-if="bid.status!='Accepted'" ng-repeat="bid in bidsList">
 		    		<div ng-class-odd="'cssOdd'">
 			    		<div class="row">
 			    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px; text-align:center">{{bid.bidDate}}</div>
 			    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px; text-align:center">{{bid.ownerEmail}}</div>
 			    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px; text-align:center">{{bid.bidPrice}}</div>
-			    			<div class="col-md-3"><input type="button" value="Accept" style="margin-bottom:0.1em"></div>
+			    			<div class="col-md-3"><input type="button" ng-click="acceptBid(bid)" value="Accept" style="margin-bottom:0.1em"></div>
 			    		</div>
 		    		</div>
 		    	</div>

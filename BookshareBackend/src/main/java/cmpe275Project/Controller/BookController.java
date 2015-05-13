@@ -124,15 +124,15 @@ public class BookController {
     @RequestMapping( method = RequestMethod.GET, value = "/books/{key}")
     public @ResponseBody ResponseEntity<JSONArray> searchBook(@PathVariable(value = "key")String key) {
     	List<Book> books = bookdao.searchBook(key);
-	System.out.println("1. Search for a book : " + books);
-		
-	JSONArray jsonArray = new JSONArray();
-    	for(Book book : books){
-    		jsonArray.add(book);
+    	JSONArray jsonArray = null;
+    	if(books.size() > 0)
+    	{
+    		jsonArray = new JSONArray();
+	    	for(Book book : books){
+	    		jsonArray.add(book);
+	    	}
     	}
-    	
-    	System.out.println("1. All for Listing Found : ");
-    	//return jsonArray;
+		
     	return new ResponseEntity<JSONArray>(jsonArray, HttpStatus.ACCEPTED);
     }
     
