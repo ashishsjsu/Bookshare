@@ -4,6 +4,7 @@ import org.json.simple.*;
 
 import cmpe275Project.Model.BookBids;
 import cmpe275Project.Model.Student;
+import cmpe275Project.Model.Transaction;
 
 
 public class JSONObj {
@@ -36,4 +37,18 @@ public class JSONObj {
 		return jsonObj;
 	}
 	
+	public JSONObject getTransactionJSON(Transaction transaction) {
+		JSONObject jsonObj = new JSONObject();
+		
+		jsonObj.put("transactionId", transaction.getTransactionId());
+		jsonObj.put("bookTitle", transaction.getBookTitle());
+		jsonObj.put("buyer", transaction.getBuyer());
+		jsonObj.put("seller", transaction.getSeller());
+		jsonObj.put("transactionType", transaction.getTransactionType());
+		jsonObj.put("transactionDate", transaction.getTransactionDate());
+		jsonObj.put("sellingPrice", transaction.getSellingPrice());
+		jsonObj.put("transactionDate", transaction.getTransactionDate());
+		
+		return jsonObj;
+	}
 }

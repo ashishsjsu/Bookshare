@@ -3,15 +3,15 @@ angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
 	.controller("appHome", ["$rootScope", "$scope", "$location", "$state","student", "mapper", "$stateParams", appDashboard])
 	.controller("loginController", ["$rootScope", "$scope", "$location", "$http", "$state", "student", LoginStudent])
 	.controller("booksController", ["$rootScope", "$scope", "$state","student","getBooks",  "mapper", "resultService", "biddingService", "$stateParams", booksController])
-	.controller('browseBooks', ["$rootScope", "$scope", "$state", "browseAll", "mapper", browseBooks])
+	.controller('browseBooks', ["$rootScope", "$scope", "$state", "student", "biddingService", "browseAll", "mapper", browseBooks])
 	.controller("booksListController", ["$rootScope", "$scope", "$state", "myBookList", "biddingService", "mapper", "$stateParams", booksListController])
 	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams", "student","bookToBid", "oldBids", "resultService", "biddingService", bidController])
 	.controller("booksBidController", ["$rootScope", "$scope", "$state", "myBookBidList", "biddingService", "mapper", "$stateParams", booksBidController])
 	
-	.factory('student', ['$state', '$http', studentFactory])
+	.factory('student', ['$state', '$stateParams', '$http', studentFactory])
 	.factory('mapper', ['$state', '$http', mapperFactory])
 	.factory('resultService', ['$state', '$http', searchResultFactory])
-	.factory('biddingService', ['$state', '$http', biddingFactory])
+	.factory('biddingService', ['$state', '$stateParams', '$http', biddingFactory])
 	
 	.config(['$stateProvider', '$urlRouterProvider', appConfigHandler]);
 
@@ -41,7 +41,7 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 	})
 	.state('home.browseBooks',{
 		url: '/home/browse',
-		templateUrl: 'templates/partials/listBooks.html',
+		templateUrl: 'templates/partials/searchBooks.html',
 		controller: 'browseBooks',
 		resolve: {
 			browseAll : ['$stateParams', 'mapper', 
@@ -145,7 +145,7 @@ function searchResultFactory($state, $http){
 }
 
 //student factory callback method
-function studentFactory($state, $http){
+function studentFactory($state, $stateParams, $http){
 	var userObj = {
 		user : []
 	};
@@ -163,7 +163,7 @@ function studentFactory($state, $http){
 		.success(function(response){
 			 
 			localStorage.setItem("session", {});		 
-			angular.copy(response, userObj);
+			//angular.copy(response, userObj);
 			success();
 		
 		})
@@ -187,11 +187,35 @@ function studentFactory($state, $http){
 		});
 	}
 	
+	function logout(success){
+		
+		return $http.post("/logout",{}).success(function(response){
+			console.log("Logged out " + JSON.stringify(response));
+			success();
+		})
+		.error(function(response, status){
+			alert("Error logging out! " +  JSON.stringify(response));
+		})
+	}
+	
+	function getLoggedInUser(success){
+		return $http.get("/login").success(function(response) {
+				angular.copy(response, userObj);
+				console.log("getLoggedInUser " + JSON.stringify(userObj));	
+				success();
+			})
+			.error(function(response, status){
+				alert("Error retrieving user");
+			});
+	}
+	
 	return {
 		userObj : userObj,
 		Login : Login,
 		LoadSignup : LoadSignup,
-		registerStudent : registerStudent
+		registerStudent : registerStudent,
+		logout: logout,
+		getLoggedInUser: getLoggedInUser
 	};
 }
 
@@ -273,7 +297,7 @@ function mapperFactory($state, $http){
 }
 
 
-function biddingFactory($state, $http){
+function biddingFactory($state, $stateParams, $http){
 	var bidObj = { 
 		bids : [] 
 	};
@@ -319,9 +343,33 @@ function biddingFactory($state, $http){
 		});
 	}
 	
-	function buyBook(book){
-		return $http.post("/book/"+book.bookTitle+"/buy", book).success(function(response){
+	function buyBook(email, book){
+		
+		//var transaction = {"bookTitle": book.bookTitle, "buyer":email, "seller":book.ownerId, "transactionType":"BUY", "transactionDate": new Date(), "sellingPrice" : book.sellPrice};
+		console.log("book " +JSON.stringify(book));
+		return $http.post("student/"+email+"/book/"+book.bookTitle+"/buy", book).success(function(response){
 			console.log("Book bought/sold " + JSON.stringify(response));
+			$state.transitionTo($state.current, $stateParams, {
+			    reload: true,
+			    inherit: false,
+			    notify: true
+			});
+		})
+		.error(function(response, status){
+			alert("Error buying "+ JSON.stringify(response));
+		})
+	}	
+	
+	function rentBook(email, book){
+		
+		console.log("book " +JSON.stringify(book));
+		return $http.post("student/"+email+"/book/"+book.bookTitle+"/rent", book).success(function(response){
+			console.log("Book rented " + JSON.stringify(response));
+			$state.transitionTo($state.current, $stateParams, {
+			    reload: true,
+			    inherit: false,
+			    notify: true
+			});
 		})
 		.error(function(response, status){
 			alert("Error buying "+ JSON.stringify(response));
@@ -332,7 +380,9 @@ function biddingFactory($state, $http){
 		bidObj: bidObj,
 		placeBid: placeBid,
 		listBids: listBids,
-		acceptBid: acceptBid
+		acceptBid: acceptBid,
+		buyBook: buyBook,
+		rentBook: rentBook
 	}
 }
 
@@ -351,7 +401,10 @@ function LoginStudent($rootScope, $scope, $location, $http, $state, studentservi
 			function() { 
 	 			$rootScope.isAuthenticated = true; 	 			
 	 			$http.get("/login").success(function(response) {
+	 				console.log("response " + JSON.stringify(response));
 	 				angular.copy(response, studentService.userObj);
+	 				localStorage.setItem("usersession", response);
+	 				console.log("studentService.userObj " + JSON.stringify(studentService.userObj));
 	 				$state.go("home");
 	 			})
 	 			.error(function(response, status){
@@ -380,6 +433,7 @@ function LoginStudent($rootScope, $scope, $location, $http, $state, studentservi
 			 			$rootScope.isAuthenticated = true; 	 			
 			 			$http.get("/login").success(function(response){
 			 				angular.copy(response, studentService.userObj);
+			 				localStorage.setItem("usersession", {'firstName' : response.firstName});
 			 				$state.go("home");
 			 			})
 			 			.error(function(response, status){
@@ -396,6 +450,7 @@ function LoginStudent($rootScope, $scope, $location, $http, $state, studentservi
 			}
 	 	)
 	 }
+	 
 
 	 $scope.loadSignup = function(){
 		 console.log("Signup controller");
@@ -413,8 +468,10 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 	
 	//$scope.profile = {};
 	//$scope.booksList = {};
+	console.log(JSON.stringify(student.userObj));
 	
 	if(student.userObj != null || student.userObj != undefined){ 
+		
 		//set scope in Dashboard
 		$scope.student = student.userObj.firstName; 
 		//set scope in profile partial page
@@ -424,12 +481,21 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 		$scope.Phone = student.userObj.phone;
 		$scope.University = student.userObj.university;
 	}
+	else{
+			console.log('Getting logged in user ' + JSON.stringify(localStorage.getItem('usersession')));
+		$scope.student = localStorage.getItem('usersession').firstName;
+	}
 	
 	$scope.logout = function(){
-		$rootScope.isAuthenticated = false;
-		localStorage.removeItem("session");
-		student.userObj = null;
-		$location.path("#/login");
+		student.logout(function(){
+			$rootScope.isAuthenticated = false;
+			localStorage.removeItem("session");
+			localStorage.removeItem("usersession");			
+			student.userObj = null;
+			$location.path("#/login");
+		});
+		
+		
 	}
 	
 	$scope.profile = function(){
@@ -491,8 +557,14 @@ function booksController($rootScope, $scope, $state, student, getBooks, mapper, 
 	}
 	
 	$scope.buyBook = function(book){
-		biddingService.buyBook(book);
+		biddingService.buyBook(student.userObj.email, book);
 	}
+	
+	$scope.rentBook = function(book){
+		console.log("RENT");
+		biddingService.rentBook(student.userObj.email, book);
+	}
+	
 }
 
 
@@ -547,8 +619,17 @@ function bidController($rootScope, $scope, $state, $stateParams, student, bookTo
 	}
 }
 
-function browseBooks($rootScope, $scope, $state, browseAll, mapper)
+function browseBooks($rootScope, $scope, $state, student, biddingService, browseAll, mapper)
 {
+	$scope.AuthUser = student.userObj.email;
+
 	console.log("Browse books controller loaded " + JSON.stringify(mapper.mapperObj));
 	$scope.booksList = mapper.mapperObj.mapper;
+	$scope.buyBook = function(book){
+		biddingService.buyBook(student.userObj.email, book);
+	}
+	$scope.rentBook = function(book){
+		console.log("RENT");
+		biddingService.rentBook(student.userObj.email, book);
+	}
 }

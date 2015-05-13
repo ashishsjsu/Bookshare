@@ -1,6 +1,9 @@
 package cmpe275Project.Model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
 import cmpe275Project.Controller.DateParser;
 
 
@@ -13,17 +16,37 @@ public class Transaction {
 	String seller;
 	String transactionType;
 	String transactionDate;
+	String endDate;
+	int duration;
 	double sellingPrice;
 	
-	public Transaction(String bookTitle, String buyer, String seller, String transactionType, double sellingPrice){
+	public Transaction()
+	{
+		
+	}
+	
+	public Transaction(Book book, String buyer, String transactionType, String transactionDate)
+	{
+		this.transactionId = counter++;
+		this.bookTitle = book.getBookTitle();
+		this.seller = book.getOwnerId();
+		this.sellingPrice = book.getSellPrice();
+		this.buyer = buyer;
+		this.transactionType = transactionType;
+		this.transactionDate = transactionDate;
+		this.duration = book.getRentDuration();
+	}
+	
+	public Transaction(String bookTitle, String buyer, String seller, String transactionType, double sellingPrice, String transactionDate){
 		super();
 		this.transactionId = counter++;
 		this.bookTitle = bookTitle;
 		this.buyer = buyer;
 		this.seller = seller;
 		this.transactionType = transactionType;
-		this.setTransactionDate();
+		this.transactionDate = transactionDate;
 		this.sellingPrice = sellingPrice;
+		this.transactionDate = transactionDate;
 	}
 	
 	public int getTransactionId() {
@@ -100,4 +123,33 @@ public class Transaction {
 	public void setSeller(String seller) {
 		this.seller = seller;
 	}
+
+	/**
+	 * @return the endDate
+	 */
+	public String getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	/**
+	 * @return the duration
+	 */
+	public int getDuration() {
+		return duration;
+	}
+
+	/**
+	 * @param duration the duration to set
+	 */
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
 }

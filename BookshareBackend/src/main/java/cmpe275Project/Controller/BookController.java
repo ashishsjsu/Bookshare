@@ -1,11 +1,15 @@
 package cmpe275Project.Controller;
 
 import java.security.InvalidParameterException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.validation.Valid;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,6 +35,7 @@ public class BookController {
 	Integer student_id = 1;
 	private BookDao bookdao = new BookDaoImpl();
     private LoginService loginService = new LoginServiceImpl();
+    private TransactionDao transactionDao = new TransactionDaoImpl();
     
     // Create Book
     @RequestMapping( method = RequestMethod.POST, value = "/{email}/book")
@@ -135,6 +140,80 @@ public class BookController {
 		
     	return new ResponseEntity<JSONArray>(jsonArray, HttpStatus.ACCEPTED);
     }
+    
+    
+    //buy a book
+    @RequestMapping( method = RequestMethod.POST, value = "student/{email}/book/{bookTitle}/buy")
+    public @ResponseBody ResponseEntity<JSONObject> buyBook(@RequestBody Book book, @PathVariable(value="email") String email){
+    
+    	Transaction transaction = null;
+    	JSONObj jsonObj = null;
+    	JSONObject transactionJSON = null;
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    	Date date = new Date();
+    	
+    	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof UserDetails) {
+            UserDetails details = (UserDetails)principal;
+            Login loggedIn = loginService.findByAccountName(details.getUsername());
+            String currEmail = loggedIn.getEmail();
+            if(loggedIn.getEmail().equals(email))
+            {
+            	transaction = new Transaction(book.getBookTitle(), email, book.getOwnerId(), "BUY", book.getSellPrice(), dateFormat.format(date).toString());
+            	//transaction = new Transaction(book.getBookTitle(), email, book.getSeller(), book.getTransactionType(), book.getSellingPrice(), book.getTransactionDate());
+            	transactionDao.createTransaction(transaction);
+            	bookdao.changeBookStatus(book.getBookId(), book.getBookTitle());
+            }
+            jsonObj = new JSONObj();
+            transactionJSON = jsonObj.getTransactionJSON(transaction);
+        }
+
+    	return new ResponseEntity<JSONObject>(transactionJSON, HttpStatus.ACCEPTED);
+    }
+    
+    //rent a book
+    @RequestMapping( method = RequestMethod.POST, value = "student/{email}/book/{bookTitle}/rent")
+    public @ResponseBody ResponseEntity<JSONObject> rentBook(@RequestBody Book book, @PathVariable(value="email") String email){
+    
+    	Transaction transaction = null;
+    	JSONObject transactionJSON = null;
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    	Date date = new Date();
+    	
+    	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof UserDetails) {
+            UserDetails details = (UserDetails)principal;
+            Login loggedIn = loginService.findByAccountName(details.getUsername());
+            String currEmail = loggedIn.getEmail();
+            if(loggedIn.getEmail().equals(email))
+            {
+            	transaction = new Transaction(book, email,"BUY", dateFormat.format(date).toString());
+            	
+            	try {
+            			//parse string to date object
+						Date startDate = dateFormat.parse(transaction.getTransactionDate());
+						//get calender instance
+						Calendar c = Calendar.getInstance();
+						c.setTime(startDate); 
+						c.add(Calendar.DATE, transaction.getDuration());//add duration to start date					
+						Date endDate = c.getTime();
+						transaction.setEndDate(dateFormat.format(endDate).toString());//finally set end date
+					
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+            	
+            	
+            	transactionDao.createTransaction(transaction);
+            	bookdao.changeBookStatus(book.getBookId(), book.getBookTitle());
+            }
+            JSONObj jsonObj = new JSONObj();
+            transactionJSON = jsonObj.getTransactionJSON(transaction);
+        }
+
+    	return new ResponseEntity<JSONObject>(transactionJSON, HttpStatus.ACCEPTED);
+    }
+    
     
     // Delete a Book.
     @RequestMapping( method = RequestMethod.DELETE, value = "/deletebook/{id}")

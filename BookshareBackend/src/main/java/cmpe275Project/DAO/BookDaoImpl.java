@@ -127,7 +127,8 @@ public class BookDaoImpl implements BookDao {
 	
 	@Override
 	public List<Book> listAllBooks() {
-		List<Book> book = mongoOps.findAll( Book.class, Book_COLLECTION);
+		Query query = new Query(Criteria.where("available").is(true));
+		List<Book> book = mongoOps.find(query, Book.class, Book_COLLECTION);
 		return book;
 	}
 	

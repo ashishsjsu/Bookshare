@@ -1,5 +1,8 @@
 package cmpe275Project.Controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -95,10 +98,12 @@ public class BiddingController {
     public ResponseEntity<JSONObject> acceptBid(@Valid @RequestBody BookBids bookBids, @PathVariable(value = "bookTitle") String bookTitle, @PathVariable(value = "bidId") Integer bidId){
     
     	if(this.bidIdExist(bidId))
-    	{
+    	{	
+    		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    		Date date = new Date();
     		bookBidsDao.updateBidandTransact(bookBids);
     		bookDao.changeBookStatus(bookBids.getBookId(), bookBids.getBookTitle());
-    		Transaction transaction = new Transaction(bookBids.getBookTitle(), bookBids.getBidderId(), bookBids.getOwnerEmail(), "Buy", bookBids.getBidPrice());
+    		Transaction transaction = new Transaction(bookBids.getBookTitle(), bookBids.getBidderId(), bookBids.getOwnerEmail(), "Buy", bookBids.getBidPrice(),  dateFormat.format(date).toString());
     		transactionDao.createTransaction(transaction);
     	}
     	JSONObject jsonObj = new JSONObject();

@@ -38,7 +38,9 @@
 	                    <span style="margin-left: 1em; margin-right: 1em">|</span>
 	                    <span class="text-left" style="font-size:medium; font-style:italic; font-weight: bold"><small><b>Selling price: </b><span>{{book.sellPrice}}</span></small></span>   
 	                	<span style="margin-left: 1em; margin-right: 1em">|</span>
-	                	<span class="text-left" style="font-size:medium; font-style:italic; font-weight: bold"><small><b>Rent price: </b><span>{{book.rentPrice}}</span></small></span>   
+	                	<span class="text-left" ng-if="book.rentDuration>0" style="font-size:medium; font-style:italic; font-weight: bold"><small><b>Rent price: </b><span>{{book.rentPrice}}</span></small></span>   
+	               		<p class="text-left" ng-if="book.rentDuration>0" style="font-size:medium; font-style:italic; font-weight: bold"><small><b>Rent duration: </b><span>{{book.rentDuration}}</span></small></p>   
+	               		
 	                </p>
             	</div>
     		</div>
@@ -46,7 +48,7 @@
 	            <div class="row" style="margin-top : 0.2em">
 	                <div class="bidBtns"><input class="btn btn-primary btn-block" ng-click="buyBook(book)" ng-if="book.forBuy==true" type="button" value="Buy" ng-disabled="book.ownerId == AuthUser"></div>
 	                <div class="bidBtns"><input class="btn btn-warning btn-block" ng-click="loadBiddingPage(book)" type="button" value="Bid" ng-disabled="book.ownerId == AuthUser"></div>
-	                <div><input class="btn btn-success btn-block" ng-if="book.forRent==true" type="button" value="Rent" ng-disabled="book.ownerId == AuthUser"></div>
+	                <div><input class="btn btn-success btn-block" ng-click="rentBook(book)" ng-if="book.forRent==true" type="button" value="Rent" ng-disabled="book.ownerId == AuthUser"></div>
 	            </div>
         	</div>
     	</div><!-- row div -->
