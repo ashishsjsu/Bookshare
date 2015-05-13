@@ -18,12 +18,12 @@ public class BookBids {
 	private float bidPrice;
 	private float basePrice;
 	private String ownerEmail;
-	
+	private String status;
 	public BookBids(){
 		
 	}
 	
-	public BookBids(String bidderId, Integer bookId, String bidDate, String bookTitle, float bidPrice, float basePrice, String ownerEmail){
+	public BookBids(String bidderId, Integer bookId, String bidDate, String bookTitle, float bidPrice, float basePrice, String ownerEmail, String status){
 		super();
 		bidId = counter++;
 		this.bidderId = bidderId;
@@ -33,6 +33,7 @@ public class BookBids {
 		this.bidPrice = bidPrice;
 		this.basePrice = basePrice;
 		this.ownerEmail = ownerEmail;
+		this.status = status;
 	}
 
 	public Integer getBookId() {
@@ -109,5 +110,19 @@ public class BookBids {
 	 */
 	public void setBidDate(String bidDate) {
 		this.bidDate = bidDate;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

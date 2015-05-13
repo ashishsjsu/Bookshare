@@ -38,8 +38,9 @@
 	    	
 	    	<!-- Bids Listing -->
 	    	<div class="row">
-	    		<label>Previous Bids on this Book  </label><button ng-click="refreshBids()" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-refresh"></span></button>
-	    		<div class="row" style="background-color: #B6BABF">
+	    		<label>Previous Bids on this Book </label><button ng-click="refreshBids()" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-refresh"></span></button>
+	    		<div class="emptyContainer" ng-if="bids.length <= 0">No bids till now!</div>
+	    		<div class="row" ng-if="bids.length > 0" style="background-color: #B6BABF">
 	    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">Bid Date</div>
 	    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">Bidder Email</div>
 	    			<div class="col-md-4">Bid</div>

@@ -6,9 +6,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import cmpe275Project.Model.Book;
 import cmpe275Project.Model.PostBook;
+import cmpe275Project.Model.RentOrBuy;
 import cmpe275Project.MyExceptions.Exceptions;
 import cmpe275Project.config.SpringMongoConfig;
 
@@ -125,8 +127,21 @@ public class BookDaoImpl implements BookDao {
 	
 	@Override
 	public List<Book> listAllBooks() {
-		//Query query = new Query(Criteria.where("ownerId").is(id));
 		List<Book> book = mongoOps.findAll( Book.class, Book_COLLECTION);
 		return book;
+	}
+	
+	//update book when bid is accepted or is bought directly
+	@Override
+	public String changeBookStatus(Integer bookId, String bookTitle) {
+	
+		Query query = new Query(Criteria.where("bookId").is(bookId).andOperator(Criteria.where("bookTitle").is(bookTitle)));
+		Book book = mongoOps.findOne(query, Book.class);
+		if(book != null){
+			Update update= new Update();
+			update.set("available", !book.isAvailable());
+			mongoOps.findAndModify(query, update, Book.class, "books");
+		}
+		return "success";
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import cmpe275Project.Model.BookBids;
 import cmpe275Project.Model.RentOrBuy;
@@ -83,6 +84,13 @@ public class BookBidsDaoImpl implements BookBidsDao {
 		Query query = new Query(Criteria.where("bookTitle").is(title));
 		List<BookBids> bookBids = mongoOps.find(query, BookBids.class);
 		return bookBids;
+	}
+	
+	public void updateBidandTransact(BookBids bid){
+		
+		Query query = new Query(Criteria.where("bidId").is(bid.getBidId()).andOperator(Criteria.where("bookTitle").is(bid.getBookTitle())));
+		mongoOps.findAndModify(query, Update.update("status", "Accepted"),BookBids.class, "bids");
+		
 	}
 	
 }

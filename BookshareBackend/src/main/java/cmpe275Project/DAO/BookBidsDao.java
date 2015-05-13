@@ -13,7 +13,7 @@ public interface BookBidsDao {
 	public BookBids getBid(Integer bidId);
 	public RentOrBuy getRentOrBuyRecord(Integer bookId);
 	public List<BookBids> listBidsforBook(String title);
-	
+	public void updateBidandTransact(BookBids bid);
 }
 
 

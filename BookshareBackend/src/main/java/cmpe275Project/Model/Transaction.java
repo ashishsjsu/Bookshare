@@ -8,17 +8,17 @@ import cmpe275Project.Controller.DateParser;
 public class Transaction {
 	private static int counter = 1;
 	int transactionId;
-	int bookId;
-	int buyer;
-	int seller;
+	String bookTitle;
+	String buyer;
+	String seller;
 	String transactionType;
 	String transactionDate;
 	double sellingPrice;
 	
-	public Transaction(int bookId, int buyer, int seller, String transactionType, double sellingPrice){
+	public Transaction(String bookTitle, String buyer, String seller, String transactionType, double sellingPrice){
 		super();
 		this.transactionId = counter++;
-		this.bookId = bookId;
+		this.bookTitle = bookTitle;
 		this.buyer = buyer;
 		this.seller = seller;
 		this.transactionType = transactionType;
@@ -32,30 +32,6 @@ public class Transaction {
 	
 	public void setTransactionId(int transactionId) {
 		this.transactionId = transactionId;
-	}
-	
-	public int getBookId() {
-		return bookId;
-	}
-	
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
-	}
-	
-	public int getBuyer() {
-		return buyer;
-	}
-	
-	public void setBuyer(int buyer) {
-		this.buyer = buyer;
-	}
-	
-	public int getSeller() {
-		return seller;
-	}
-	
-	public void setSeller(int seller) {
-		this.seller = seller;
 	}
 	
 	public String getTransactionType() {
@@ -81,5 +57,47 @@ public class Transaction {
 	
 	public void setSellingPrice(double sellingPrice) {
 		this.sellingPrice = sellingPrice;
+	}
+
+	/**
+	 * @return the bookTitle
+	 */
+	public String getBookTitle() {
+		return bookTitle;
+	}
+
+	/**
+	 * @param bookTitle the bookTitle to set
+	 */
+	public void setBookTitle(String bookTitle) {
+		this.bookTitle = bookTitle;
+	}
+
+	/**
+	 * @return the buyer
+	 */
+	public String getBuyer() {
+		return buyer;
+	}
+
+	/**
+	 * @param buyer the buyer to set
+	 */
+	public void setBuyer(String buyer) {
+		this.buyer = buyer;
+	}
+
+	/**
+	 * @return the seller
+	 */
+	public String getSeller() {
+		return seller;
+	}
+
+	/**
+	 * @param seller the seller to set
+	 */
+	public void setSeller(String seller) {
+		this.seller = seller;
 	}
 }

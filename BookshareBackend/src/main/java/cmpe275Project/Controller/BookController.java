@@ -77,10 +77,23 @@ public class BookController {
     @RequestMapping( method = RequestMethod.GET, value = "/{email}/books")
     public ResponseEntity<JSONArray> listUserBooks(@PathVariable(value = "email")String email) {
     	
-    	List<Book> books = bookdao.listUserBooks(email);
-    	JSONArray jsonArray = new JSONArray();
-    	for(Book book : books){
-    		jsonArray.add(book);
+    	List<Book> books = null;
+    	JSONArray jsonArray = null;
+    	
+    	if(email.equals("all"))
+    	{
+    		books = bookdao.listAllBooks();        	
+    	}
+    	else
+    	{
+    		books = bookdao.listUserBooks(email);
+    	}
+    	
+    	if(books.size() > 0){
+    		jsonArray = new JSONArray();
+        	for(Book book : books){
+        		jsonArray.add(book);
+        	}
     	}
     	
     	System.out.println("1. All for Listing Found : ");
@@ -89,17 +102,21 @@ public class BookController {
     }
     
     // List of all available Book.
-    @RequestMapping( method = RequestMethod.GET, value = "/listallbooks")
+    @RequestMapping( method = RequestMethod.GET, value = "/books")
     public ResponseEntity<JSONArray> listallBooks() {
     	
     	List<Book> books = bookdao.listAllBooks();
-    	JSONArray jsonArray = new JSONArray();
-    	for(Book book : books){
-    		jsonArray.add(book);
+    	JSONArray jsonArray = null;
+    	
+    	if(books.size() > 0)
+    	{
+    		jsonArray = new JSONArray();
+    		for(Book book : books){
+        		jsonArray.add(book);
+        	}
     	}
     	
     	System.out.println("1. All for Listing Found : ");
-    	//return jsonArray;
     	return new ResponseEntity<JSONArray>(jsonArray, HttpStatus.ACCEPTED);
     }
     

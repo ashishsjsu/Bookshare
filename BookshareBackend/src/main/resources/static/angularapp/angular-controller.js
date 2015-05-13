@@ -3,9 +3,9 @@ angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
 	.controller("appHome", ["$rootScope", "$scope", "$location", "$state","student", "mapper", "$stateParams", appDashboard])
 	.controller("loginController", ["$rootScope", "$scope", "$location", "$http", "$state", "student", LoginStudent])
 	.controller("booksController", ["$rootScope", "$scope", "$state","student","getBooks",  "mapper", "resultService", "biddingService", "$stateParams", booksController])
-
+	.controller('browseBooks', ["$rootScope", "$scope", "$state", "browseAll", "mapper", browseBooks])
 	.controller("booksListController", ["$rootScope", "$scope", "$state", "myBookList", "biddingService", "mapper", "$stateParams", booksListController])
-	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams", "student","bookToBid", "resultService", "biddingService", bidController])
+	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams", "student","bookToBid", "oldBids", "resultService", "biddingService", bidController])
 	.controller("booksBidController", ["$rootScope", "$scope", "$state", "myBookBidList", "biddingService", "mapper", "$stateParams", booksBidController])
 	
 	.factory('student', ['$state', '$http', studentFactory])
@@ -39,6 +39,18 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 		templateUrl: 'templates/partials/profile.html',
 		controller: 'appHome'
 	})
+	.state('home.browseBooks',{
+		url: '/home/browse',
+		templateUrl: 'templates/partials/listBooks.html',
+		controller: 'browseBooks',
+		resolve: {
+			browseAll : ['$stateParams', 'mapper', 
+			             function($stateParams, mapper){
+							console.log("Browse all controller");
+							return mapper.ListBook("all");
+			}]
+		}
+	})
 	.state('home.addBook', {
 		url: '/home/addBook',
 		templateUrl: 'templates/partials/addBook.html',
@@ -64,7 +76,7 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 			myBookBidList: ['$stateParams', 'biddingService',
 				function($stateParams,biddingService){
 					console.log("Bid list controller resolve " + $stateParams.book);
-					return biddingService.ListBids($stateParams.book);
+					return biddingService.listBids($stateParams.book);
 			}]
 		}
 	})
@@ -197,7 +209,9 @@ function mapperFactory($state, $http){
 		$state.go('home.addBook');
 	}
 	
+	
 	function ListBook(studentEmail){
+		
 		return $http.get(studentEmail+'/books/')
 		.success(function(response){
 			//angular.copy(response[0], mapperObj);
@@ -288,17 +302,28 @@ function biddingFactory($state, $http){
 				bidObj.bids.push(response[i]);
 			}
 			console.log("Bids pushed " + JSON.stringify(response));
-			
+			return bidObj.bids;
 		})
 		.error(function(response, status){
 			alert("Error getting bids " + response);
 		})
 	}
 	
+	function acceptBid(bid){
+		console.log("Accept bid " + bid.bidId + " " + bid.bookTitle);
+		return $http.post("/book/"+ bid.bookTitle +"/bid/"+ bid.bidId +"/accept", bid).success(function(response){
+			console.log("Bid accepeted " + JSON.stringify(response));
+		})
+		.error(function(response, status){
+			alert("Error accepting bid " + JSON.stringify(response));
+		});
+	}
+	
 	return{
 		bidObj: bidObj,
 		placeBid: placeBid,
-		listBids: listBids
+		listBids: listBids,
+		acceptBid: acceptBid
 	}
 }
 
@@ -328,6 +353,8 @@ function LoginStudent($rootScope, $scope, $location, $http, $state, studentservi
 				if(studentService.userObj.error == "LoginErr") {
 					$scope.errorMsg = "Login failed. Invalid Email/password combination.";
 					$rootScope.authenticated = false;
+					$scope.student.email = "";
+					$scope.student.password = "";					
 				}
 			 }	
 		 )
@@ -375,8 +402,8 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 		$location.path("#/login");
 	}
 	
-	$scope.profile = {};
-	$scope.booksList = {};
+	//$scope.profile = {};
+	//$scope.booksList = {};
 	
 	if(student.userObj != null || student.userObj != undefined){ 
 		//set scope in Dashboard
@@ -414,7 +441,7 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 		//$scope.keyval = "";
 	}
   
-    $scope.booksList = mapper.mapperObj.mapper;		
+    //$scope.booksList = mapper.mapperObj.mapper;		
 		
     $scope.addBook = function(){		
         mapperService.AddBook(student.userObj.email, $scope.newBook);
@@ -429,12 +456,19 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 	    $scope.newBook.available = true;
 		mapperService.loadAddBook();
 	}
+	
+	$scope.browseBooks = function(){
+		$state.go('home.browseBooks');
+	}
+	
+	
 }
 
 // Controller for Books 
 function booksController($rootScope, $scope, $state, student, getBooks, mapper, resultService, biddingService, $stateParams){
 	
 	//getBooks will return data from service
+	$scope.keyval = "";
 	$scope.getBooks = getBooks;
 	$scope.booksList = mapper.mapperObj.mapper;
 	$scope.AuthUser = student.userObj.email;
@@ -461,19 +495,27 @@ function booksListController($rootScope, $scope, $state, myBookList, biddingServ
 }
 
 function booksBidController($rootScope, $scope, $state, myBookBidList, biddingService, mapper, $stateParams){
-	console.log("bookListController loaded " + JSON.stringify(biddingService.bidObj.bids));
 	$scope.bidsList = biddingService.bidObj.bids;
+	
+	$scope.acceptBid = function(bid){
+		console.log("Accept bid " + JSON.stringify(bid));
+		biddingService.acceptBid(bid);
+	}
 }
 
 // Controller for bidding on Books.
 function bidController($rootScope, $scope, $state, $stateParams, student, bookToBid, oldBids, resultService, biddingService){
 	
-	console.log("Bid controller loaded "  + JSON.stringify(biddingService.bidObj.bids));
-	$scope.bids = biddingService.bidObj.bids;
+	if(biddingService != undefined){
+		if(biddingService.bidObj != undefined){
+				console.log("Bid controller loaded "  + JSON.stringify(biddingService.bidObj.bids));
+				$scope.bids = biddingService.bidObj.bids;
+		}			
+	}
 	$scope.book = resultService.results;
 	
 	$scope.placeBid = function(book){
-		var newBid = {"bidPrice" : $scope.bidPrice, "ownerEmail": book.ownerId, "bookId": book.bookId, "bidDate": new Date(), "bookTitle" : book.bookTitle, "basePrice": book.sellPrice, "bidderId": student.userObj.email};
+		var newBid = {"bidPrice" : $scope.bidPrice, "ownerEmail": book.ownerId, "bookId": book.bookId, "bidDate": new Date(), "bookTitle" : book.bookTitle, "basePrice": book.sellPrice, "bidderId": student.userObj.email, "status": "Open"};
 		console.log(JSON.stringify(newBid));
 		biddingService.placeBid(newBid);
 		$scope.bidPrice = "";
@@ -483,4 +525,10 @@ function bidController($rootScope, $scope, $state, $stateParams, student, bookTo
 		console.log("refresh bids");
 		$scope.bids = biddingService.bidObj.bids;
 	}
+}
+
+function browseBooks($rootScope, $scope, $state, browseAll, mapper)
+{
+	console.log("Browse books controller loaded " + JSON.stringify(mapper.mapperObj));
+	$scope.booksList = mapper.mapperObj.mapper;
 }

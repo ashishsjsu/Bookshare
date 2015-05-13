@@ -1,6 +1,7 @@
 package cmpe275Project.DAO;
 
 import java.util.List;
+
 import cmpe275Project.Model.Book;
 import cmpe275Project.Model.PostBook;
 
@@ -12,4 +13,6 @@ public interface BookDao {
 	void postBook(PostBook postBook);
 	List<Book> listAllBooks();
 	List<Book> listUserBooks(String id);
+	public String changeBookStatus(Integer bookId, String bookTitle);
+	
 }

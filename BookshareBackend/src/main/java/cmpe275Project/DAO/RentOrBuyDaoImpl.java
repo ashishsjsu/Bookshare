@@ -41,10 +41,7 @@ public class RentOrBuyDaoImpl implements RentOrBuyDao {
 
 	@Override
 	public String changeBookStatus(int id, String status) {
-		// TODO Auto-generated method stub
-		
-		//update query
-		
+	
 		Query query = new Query(Criteria.where("bookId").is(id));
 		RentOrBuy rentOrBuy = mongoOps.findOne(query, RentOrBuy.class);
 		Update update = new Update();

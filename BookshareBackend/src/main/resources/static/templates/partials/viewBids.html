@@ -4,19 +4,20 @@
 	    	<!-- Bids Listing -->
 	    	<div class="row">
 	    		<label>Available Bids on this Book </label>
-	    		<div class="row" style="background-color: #B6BABF">
+	    		<div class="emptyContainer" ng-if="bidsList.length <= 0">No bids till now!</div>
+	    		<div class="row" ng-if="bidsList.length > 0" style="background-color: #B6BABF">
 	    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px">Bid Date</div>
 	    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px">Bidder</div>
 	    			<div class="col-md-3">Bid Price</div>
 	    			<div class="col-md-3">Accept Bid</div>
 	    		</div>
-		    	<div id="listContainer" ng-repeat="bid in bidList">
+		    	<div id="listContainer" ng-repeat="bid in bidsList">
 		    		<div ng-class-odd="'cssOdd'">
 			    		<div class="row">
 			    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px">{{bid.bidDate}}</div>
-			    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px">{{bid.ownerEmail}}</div>
+			    			<div class="col-md-3" style="border-right : solid #B7BBC1 1px">{{bid.bidderId}}</div>
 			    			<div class="col-md-3">{{bid.bidPrice}}</div>
-			    			<div class="col-md-3"><input type="button" value="Accept"></div>
+			    			<div class="col-md-3"><input type="button" class="btn btn-success" value="Accept" ng-click="acceptBid(bid)"></div>
 			    		</div>
 		    		</div>
 		    		<div id="seperator" class="divider" style="border: solid 1px rgb(211, 211, 211); margin-top:1em; margin-bottom:1em"></div>

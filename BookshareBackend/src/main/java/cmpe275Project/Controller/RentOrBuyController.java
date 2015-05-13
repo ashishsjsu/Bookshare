@@ -22,7 +22,7 @@ public class RentOrBuyController {
 	private int studentId = 101;
 	
 		// Buy a Book. --- >>> Merge Transaction --> Hardcoding sold and rent
-	 	@RequestMapping(method = RequestMethod.POST, value = "/buybook")
+/*	 	@RequestMapping(method = RequestMethod.POST, value = "/buybook")
 	 	public @ResponseBody String buyBook(@RequestBody RentOrBuy rentOrBuy)
 	 			 {
 
@@ -74,6 +74,6 @@ public class RentOrBuyController {
 	 		
 	 		return "Success";
 	 	}
-
+*/
 
 }

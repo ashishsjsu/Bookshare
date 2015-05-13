@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cmpe275Project.DAO.BookBidsDao;
 import cmpe275Project.DAO.BookBidsDaoImpl;
+import cmpe275Project.DAO.BookDao;
+import cmpe275Project.DAO.BookDaoImpl;
 import cmpe275Project.DAO.RentOrBuyDao;
 import cmpe275Project.DAO.RentOrBuyDaoImpl;
 import cmpe275Project.DAO.TransactionDao;
@@ -32,6 +34,7 @@ import cmpe275Project.Model.Transaction;
 public class BiddingController {
 	
 	Integer student_id = 1;
+	BookDao bookDao = new BookDaoImpl();
 	BookBidsDao bookBidsDao = new BookBidsDaoImpl();
 	RentOrBuyDao rentOrBuyDao = new RentOrBuyDaoImpl();
 	TransactionDao transactionDao = new TransactionDaoImpl();
@@ -46,7 +49,7 @@ public class BiddingController {
 			String message = "";
 			if(this.checkValidBid(bookBids, bidderEmail))
 			{
-				BookBids bidsObj = new BookBids(bidderEmail, bookBids.getBookId(), bookBids.getBidDate(), bookBids.getBookTitle(), bookBids.getBidPrice(), bookBids.getBasePrice(), bookBids.getOwnerEmail());
+				BookBids bidsObj = new BookBids(bidderEmail, bookBids.getBookId(), bookBids.getBidDate(), bookBids.getBookTitle(), bookBids.getBidPrice(), bookBids.getBasePrice(), bookBids.getOwnerEmail(), bookBids.getStatus());
 				bookBidsDao.addBid(bidsObj);
 				bid = json.getBookbidJSON(bidsObj);
 				message = "Success";
@@ -88,8 +91,25 @@ public class BiddingController {
     }
     
     
+    @RequestMapping(method=RequestMethod.POST, value="/book/{bookTitle}/bid/{bidId}/accept")
+    public ResponseEntity<JSONObject> acceptBid(@Valid @RequestBody BookBids bookBids, @PathVariable(value = "bookTitle") String bookTitle, @PathVariable(value = "bidId") Integer bidId){
+    
+    	if(this.bidIdExist(bidId))
+    	{
+    		bookBidsDao.updateBidandTransact(bookBids);
+    		bookDao.changeBookStatus(bookBids.getBookId(), bookBids.getBookTitle());
+    		Transaction transaction = new Transaction(bookBids.getBookTitle(), bookBids.getBidderId(), bookBids.getOwnerEmail(), "Buy", bookBids.getBidPrice());
+    		transactionDao.createTransaction(transaction);
+    	}
+    	JSONObject jsonObj = new JSONObject();
+    	jsonObj.put("message", "accepted");
+    	return new ResponseEntity<JSONObject>(jsonObj, HttpStatus.ACCEPTED);
+    }
+    
+   
+    
  // Accept offer for a Book.
-    @RequestMapping( method = RequestMethod.GET, value = "/acceptoffer/{id}") //Check URL with team --> bid id will be sent 
+   /* @RequestMapping( method = RequestMethod.GET, value = "/acceptoffer/{id}") //Check URL with team --> bid id will be sent 
     public String acceptOffer(@PathVariable(value = "id") Integer bidId) {
 			
 			String status = " ";
@@ -124,7 +144,7 @@ public class BiddingController {
 		    }
 			return status; //book;
     }
-    
+  */  
     
      
 
