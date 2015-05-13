@@ -1,12 +1,25 @@
 <div id="wrapper-container">
     <div id="dataContainer" class="animate form">
+    <% int index = 0 %>
         <label for="conatiner-header" class="youmail" >Available Books</label>
         <div id="result-conatiner">
-            <div ng-repeat="group in groups">
-                <div class="col-md-4">{{Book Name}}</div>
-                <div class="col-md-4">{{Book Author}}</div>
-                <div class="col-md-4">{{Book ISBN}}</div>
-                <div class="separator"></div>
+        	<div class="row">
+        		<div class="col-md-2">S.No.</div>
+           		<div class="col-md-2">Book Name</div>
+                <div class="col-md-2">Buyer/Seller</div>
+                <div class="col-md-2">Price</div>
+                <div class="col-md-2">Date</div>
+                <div class="col-md-2">Rent Duration</div>
+           	</div>
+            <div ng-repeat="result in resultSet">
+            	<div class="row">
+            		<div class="col-md-2">{{index+1}}</div>
+            		<div class="col-md-2">{{result.}}</div>
+	                <div class="col-md-2">{{result.Author}}</div>
+	                <div class="col-md-2">{{result.ISBN}}</div>
+	                <div class="col-md-2">{{result.Date}}</div>
+	                <div class="col-md-2">Rent Duration</div>
+            	</div>                
             </div>
             <!-- END: Outer ngRepeat. -->
         </div>
