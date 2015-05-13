@@ -7,7 +7,7 @@ angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
 	.controller("booksListController", ["$rootScope", "$scope", "$state", "myBookList", "biddingService", "mapper", "$stateParams", booksListController])
 	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams", "student","bookToBid", "oldBids", "resultService", "biddingService", bidController])
 	.controller("booksBidController", ["$rootScope", "$scope", "$state", "myBookBidList", "biddingService", "mapper", "$stateParams", booksBidController])
-	.controller("transactionHistoryController", ["$scope", "$state", "$stateParams", "purchaseHistory", "mapper", "student", transactionsController])
+	.controller("transactionsController", ["$scope", "$state", "$stateParams", "purchaseHistory", "mapper", "student", transactionsController])
 	
 	.factory('student', ['$state', '$stateParams', '$http', studentFactory])
 	.factory('mapper', ['$state', '$http', mapperFactory])
@@ -370,11 +370,12 @@ function biddingFactory($state, $stateParams, $http){
 		console.log("book " +JSON.stringify(book));
 		return $http.post("student/"+email+"/book/"+book.bookTitle+"/buy", book).success(function(response){
 			console.log("Book bought/sold " + JSON.stringify(response));
-			$state.transitionTo($state.current, $stateParams, {
+			/*$state.transitionTo($state.current, $stateParams, {
 			    reload: true,
 			    inherit: false,
 			    notify: true
-			});
+			});*/
+			$state.go('home.history', {email : email});
 		})
 		.error(function(response, status){
 			alert("Error buying "+ JSON.stringify(response));
@@ -386,11 +387,12 @@ function biddingFactory($state, $stateParams, $http){
 		console.log("book " +JSON.stringify(book));
 		return $http.post("student/"+email+"/book/"+book.bookTitle+"/rent", book).success(function(response){
 			console.log("Book rented " + JSON.stringify(response));
-			$state.transitionTo($state.current, $stateParams, {
+			/*$state.transitionTo($state.current, $stateParams, {
 			    reload: true,
 			    inherit: false,
 			    notify: true
-			});
+			});*/
+			$state.go('home.history', {email : email});
 		})
 		.error(function(response, status){
 			alert("Error buying "+ JSON.stringify(response));
@@ -426,7 +428,7 @@ function LoginStudent($rootScope, $scope, $location, $http, $state, studentservi
 	 				angular.copy(response, studentService.userObj);
 	 				localStorage.setItem("usersession", response);
 	 				console.log("studentService.userObj " + JSON.stringify(studentService.userObj));
-	 				$state.go("home");
+	 				$state.go("home.browseBooks");
 	 			})
 	 			.error(function(response, status){
 	 				alert("Error retrieving user");
@@ -658,6 +660,6 @@ function browseBooks($rootScope, $scope, $state, student, biddingService, browse
 
 function transactionsController($scope, $state, $stateParams, purchaseHistory, mapper, student){
 	
-	console.log("Transactions controller loaded " + JSON.stringify(mapper.mapperObj));
-	
+	console.log("Transactions controller loaded " + JSON.stringify(mapper.mapperObj.mapper));
+	$scope.resultSet = mapper.mapperObj.mapper;
 }

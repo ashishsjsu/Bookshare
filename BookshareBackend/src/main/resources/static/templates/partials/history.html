@@ -1,24 +1,24 @@
 <div id="wrapper-container">
     <div id="dataContainer" class="animate form">
-    <% int index = 0 %>
-        <label for="conatiner-header" class="youmail" >Available Books</label>
+    
+        <label for="conatiner-header" class="youmail" >Purchase/Sell History</label>
         <div id="result-conatiner">
-        	<div class="row">
-        		<div class="col-md-2">S.No.</div>
-           		<div class="col-md-2">Book Name</div>
-                <div class="col-md-2">Buyer/Seller</div>
-                <div class="col-md-2">Price</div>
-                <div class="col-md-2">Date</div>
-                <div class="col-md-2">Rent Duration</div>
+        	<div class="row" style="border-bottom: solid 1px; background-color: darkgray;">
+        		<div class="col-md-2" style="font-weight:bolder">S.No.</div>
+           		<div class="col-md-2" style="font-weight:bolder">Book Title</div>
+                <div class="col-md-2" style="font-weight:bolder">Seller</div>
+                <div class="col-md-2" style="font-weight:bolder">Price</div>
+                <div class="col-md-2" style="font-weight:bolder">Date</div>
+                <div class="col-md-2" style="font-weight:bolder">Rent Duration</div>
            	</div>
             <div ng-repeat="result in resultSet">
-            	<div class="row">
-            		<div class="col-md-2">{{index+1}}</div>
-            		<div class="col-md-2">{{result.}}</div>
-	                <div class="col-md-2">{{result.Author}}</div>
-	                <div class="col-md-2">{{result.ISBN}}</div>
-	                <div class="col-md-2">{{result.Date}}</div>
-	                <div class="col-md-2">Rent Duration</div>
+            	<div class="row" style="border-bottom: solid 1px;">
+            		<div class="col-md-2" style="border-right : solid #B7BBC1 1px; text-align:center">{{$index+1}}</div>
+            		<div class="col-md-2" style="border-right : solid #B7BBC1 1px; text-align:center">{{result.bookTitle}}</div>
+            		<div class="col-md-2" style="border-right : solid #B7BBC1 1px; text-align:center">{{result.seller}}</div>
+	                <div class="col-md-2" style="border-right : solid #B7BBC1 1px; text-align:center">{{result.sellingPrice}}</div>
+	                <div class="col-md-2" style="border-right : solid #B7BBC1 1px; text-align:center">{{result.transactionDate}}</div>
+	                <div class="col-md-2" ng-if="result.duration>0">{{result.duration}}</div>
             	</div>                
             </div>
             <!-- END: Outer ngRepeat. -->
