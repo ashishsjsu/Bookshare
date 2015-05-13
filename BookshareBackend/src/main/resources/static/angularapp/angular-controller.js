@@ -7,6 +7,7 @@ angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
 	.controller("booksListController", ["$rootScope", "$scope", "$state", "myBookList", "biddingService", "mapper", "$stateParams", booksListController])
 	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams", "student","bookToBid", "oldBids", "resultService", "biddingService", bidController])
 	.controller("booksBidController", ["$rootScope", "$scope", "$state", "myBookBidList", "biddingService", "mapper", "$stateParams", booksBidController])
+	.controller("transactionHistoryController", ["$scope", "$state", "$stateParams", "purchaseHistory", "mapper", "student", transactionsController])
 	
 	.factory('student', ['$state', '$stateParams', '$http', studentFactory])
 	.factory('mapper', ['$state', '$http', mapperFactory])
@@ -112,9 +113,16 @@ function appConfigHandler($stateProvider, $urlRouterProvider){
 	
 	})
 	.state('home.history', {
-		url: '/home/history',
+		url: '/home/history/:email',
 		templateUrl: 'templates/partials/history.html',
-		controller: 'appHome'
+		controller: 'transactionsController',
+		resolve:{
+			purchaseHistory : ['$stateParams', 'mapper', 
+			                   function($stateParams, mapper){
+								console.log("Getting purchase hostory for " + $stateParams.email);
+								return mapper.getHistory($stateParams.email);
+			}]
+		}
 	})
 	
 	$urlRouterProvider.otherwise('/login');
@@ -281,14 +289,27 @@ function mapperFactory($state, $http){
         	})
 	}
 	
-	function History(){
-		$state.go('home.bidBook');
+	function getHistory(email){
+		return $http.get('/student/'+email+'/history')
+		.success(function(response){
+			if(mapperObj.mapper != null || mapperObj.mapper != undefined){
+				mapperObj.mapper = [];
+			}
+			for(var i=0; i<response.length; i++){
+				mapperObj.mapper.push(response[i]);
+			}
+			return mapperObj.mapper;
+		})
+		.error(function(response, status){
+    		alert("Error retrieving transactions "  + JSON.stringify(response));
+
+		})
 	}
 	
 	return {
 		mapperObj : mapperObj,
 		LoadProfile : LoadProfile,
-		History : History,
+		getHistory : getHistory,
 		ListBook : ListBook,
 		AddBook : AddBook,
 		SearchBook : SearchBook,
@@ -503,7 +524,7 @@ function appDashboard($rootScope, $scope, $location, $state, student, mapper, $s
 	}
 	
 	$scope.history = function(){
-		mapperService.History();
+		$state.go('home.history', {email :  student.userObj.email});
 	}
 	
 	$scope.myBooks = function(){
@@ -632,4 +653,11 @@ function browseBooks($rootScope, $scope, $state, student, biddingService, browse
 		console.log("RENT");
 		biddingService.rentBook(student.userObj.email, book);
 	}
+}
+
+
+function transactionsController($scope, $state, $stateParams, purchaseHistory, mapper, student){
+	
+	console.log("Transactions controller loaded " + JSON.stringify(mapper.mapperObj));
+	
 }

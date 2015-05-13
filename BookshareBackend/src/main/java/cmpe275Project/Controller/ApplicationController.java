@@ -1,9 +1,17 @@
 package cmpe275Project.Controller;
 
 import java.security.InvalidParameterException;
+import java.util.List;
+
 import javax.validation.Valid;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +29,7 @@ import cmpe275Project.MyExceptions.Exceptions.UserRegistrationFailedExeption;
 public class ApplicationController {
 	Integer student_id = 1;
 	JSONObj jsonObj = new JSONObj();
+	private TransactionDao transactionDao = null;
 	private LoginDao loginDao = new LoginDaoImpl(); 
 	private StudentDao studentdao = new StudentDaoImpl();
 	private BookDao bookdao = new BookDaoImpl();
@@ -75,6 +84,27 @@ public class ApplicationController {
 			System.out.println("1. Student Data Updated : " + student);
 			return student;
     }
+    
+    
+    @RequestMapping(value="/student/{email}/history", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity<JSONArray> getPuchaseHistory(@PathVariable(value = "email") String email)
+    {
+    	transactionDao = new TransactionDaoImpl();
+    	JSONArray jsonArray = null;
+    	
+    	List<Transaction> transactions = transactionDao.getTransactions(email);
+    	
+    	if(transactions.size() > 0){
+    		jsonArray = new JSONArray();
+    		for(Transaction purchase: transactions){
+    			jsonArray.add(purchase);
+    		}
+    	}
+    			
+    	return new ResponseEntity<JSONArray>(jsonArray, HttpStatus.OK);
+    }
+
+    
     
     //HELPER METHODS
     private void checkValidBook(Book book) {

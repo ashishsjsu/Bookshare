@@ -30,7 +30,7 @@ public class Transaction {
 		this.transactionId = counter++;
 		this.bookTitle = book.getBookTitle();
 		this.seller = book.getOwnerId();
-		this.sellingPrice = book.getSellPrice();
+		this.sellingPrice = book.getRentPrice();
 		this.buyer = buyer;
 		this.transactionType = transactionType;
 		this.transactionDate = transactionDate;
