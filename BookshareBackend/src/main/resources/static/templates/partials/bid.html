@@ -1,6 +1,7 @@
 <div id="wrapper-container">
     <div id="dataContainer" class="animate form">  
 		<div class="container">
+		<label for="mybooks" class="youmail" >Place a bid</label>
 	    	<div class="row">
 	    		<div class="col-md-4">
 	    			 <img id="bookimage" style="width: 10em; margin-left: -3em; border: solid 1px azure;" src="/images/book-default.jpg" alt="" class="center-block img-rounded img-responsive">    			
@@ -48,7 +49,7 @@
 	    		</div>
 		    	<div id="listContainer" ng-repeat="bid in bids">
 		    		<div ng-class-odd="'cssOdd'">
-			    		<div class="row">
+			    		<div class="row" ng-if="bid.status=='Open'">
 			    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">{{bid.bidDate}}</div>
 			    			<div class="col-md-4" style="border-right : solid #B7BBC1 1px">{{bid.bidderId}}</div>
 			    			<div class="col-md-4">{{bid.bidPrice}}</div>

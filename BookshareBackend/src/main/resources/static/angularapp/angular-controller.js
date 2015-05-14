@@ -3,7 +3,7 @@ angular.module("BookShare", ['ui.router', 'ui.bootstrap'])
 	.controller("appHome", ["$rootScope", "$scope", "$location", "$state","student", "mapper", "$stateParams", appDashboard])
 	.controller("loginController", ["$rootScope", "$scope", "$location", "$http", "$state", "student", LoginStudent])
 	.controller("booksController", ["$rootScope", "$scope", "$state","student","getBooks",  "mapper", "resultService", "biddingService", "$stateParams", booksController])
-	.controller('browseBooks', ["$rootScope", "$scope", "$state", "student", "biddingService", "browseAll", "mapper", browseBooks])
+	.controller('browseBooks', ["$rootScope", "$scope", "$state", "student", "biddingService", "browseAll", "mapper", "resultService", browseBooks])
 	.controller("booksListController", ["$rootScope", "$scope", "$state", "myBookList", "biddingService", "mapper", "$stateParams", booksListController])
 	.controller("bidController", ["$rootScope", "$scope", "$state", "$stateParams", "student","bookToBid", "oldBids", "resultService", "biddingService", bidController])
 	.controller("booksBidController", ["$rootScope", "$scope", "$state", "myBookBidList", "biddingService", "mapper", "$stateParams", booksBidController])
@@ -358,6 +358,7 @@ function biddingFactory($state, $stateParams, $http){
 		console.log("Accept bid " + bid.bidId + " " + bid.bookTitle);
 		return $http.post("/book/"+ bid.bookTitle +"/bid/"+ bid.bidId +"/accept", bid).success(function(response){
 			console.log("Bid accepeted " + JSON.stringify(response));
+			$state.go("home.browseBooks");
 		})
 		.error(function(response, status){
 			alert("Error accepting bid " + JSON.stringify(response));
@@ -642,18 +643,25 @@ function bidController($rootScope, $scope, $state, $stateParams, student, bookTo
 	}
 }
 
-function browseBooks($rootScope, $scope, $state, student, biddingService, browseAll, mapper)
+function browseBooks($rootScope, $scope, $state, student, biddingService, browseAll, mapper, resultService)
 {
 	$scope.AuthUser = student.userObj.email;
 
 	console.log("Browse books controller loaded " + JSON.stringify(mapper.mapperObj));
 	$scope.booksList = mapper.mapperObj.mapper;
+	
 	$scope.buyBook = function(book){
 		biddingService.buyBook(student.userObj.email, book);
 	}
+	
 	$scope.rentBook = function(book){
 		console.log("RENT");
 		biddingService.rentBook(student.userObj.email, book);
+	}
+	
+	$scope.loadBiddingPage = function(book){
+		//save the search result in service so that it is accessible for bidding 
+		resultService.setSearchResults(book, function(){ $state.go('home.bidBook', { bookId : book.bookTitle}); });
 	}
 }
 
