@@ -1,0 +1,906 @@
+commit d6edbe6788d5b19e9f386af20c85e89fda58de3e
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Wed May 13 20:01:03 2015 -0700
+
+    Bug fixing
+
+commit 477bac9ec699dbb7f28b2d2e6b1ba2267209abc3
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Wed May 13 16:40:51 2015 -0700
+
+    Demo day
+
+commit fc94ba053dfcfde2a45fc050e2fedc2e609fa755
+Merge: dd4ae10 02a4b35
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Wed May 13 15:54:35 2015 -0700
+
+    Merge branch 'master' of https://github.com/ashishsjsu/Bookshare
+
+commit dd4ae101581c982941e13cf6fa02256f2a741cd3
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Wed May 13 15:53:51 2015 -0700
+
+    Purchase history frontend updated
+
+commit 02a4b352ef4c08b0d08ecd59561d2451188a7258
+Author: Neeraj Gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 13 15:47:06 2015 -0700
+
+    update history.html
+
+commit 763c7b3f4fa570978224676aeec5ff97c9880b37
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Wed May 13 14:55:03 2015 -0700
+
+    Transactions updated
+
+commit ca0e9fe36ab0c023b2839a440ab46f72fe0e5177
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Tue May 12 22:44:41 2015 -0700
+
+    Book buy implementation and front end enhancements
+
+commit 163c2ae7120bd50b12fa55ec782f4c83cdfa1d66
+Merge: 8bd6637 a29e782
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Tue May 12 21:30:32 2015 -0700
+
+    Master branch merge
+
+commit 8bd66374eb3f60b0be7cc6898f871cecf1eaf50f
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Tue May 12 21:28:16 2015 -0700
+
+    Accept bid implementation
+
+commit a29e78265b20060eb2326deedc338ae34fdeaf8f
+Author: Neeraj Gupta <neeraj.gupta@sjsu.edu>
+Date:   Tue May 12 21:23:30 2015 -0700
+
+    Update bid list structure
+
+commit 3c7e60f1b5ba1a6b1bd36aef7d9f3feb9706957b
+Merge: 74ac927 42d9885
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Tue May 12 15:23:53 2015 -0700
+
+    Master branch merged
+
+commit 74ac927e5fdde3e1a2537ff35087a344903c803c
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Tue May 12 14:26:32 2015 -0700
+
+    Bid implementation
+
+commit 42d988568ec1888ca81ac10b05684b45b16471ad
+Author: Neeraj Gupta <neeraj.gupta@sjsu.edu>
+Date:   Tue May 12 13:17:14 2015 -0700
+
+    Update viewBids.html
+
+commit a8af645b3b3984ffad24089880e47dcedbc6ec87
+Author: Neeraj Gupta <neeraj.gupta@sjsu.edu>
+Date:   Tue May 12 13:16:07 2015 -0700
+
+    Change click link on book Title to button
+
+commit 59b25761704be54bf16e60c734709955f845d493
+Author: Neeraj Gupta <neeraj.gupta@sjsu.edu>
+Date:   Tue May 12 13:14:04 2015 -0700
+
+    Display book bidding logic in angular controller.
+
+commit 35c5f668554b8a5fc47f862e7616bae10b77e11a
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Tue May 12 01:09:07 2015 -0700
+
+    controller update line
+
+commit 7381b06b5d409e4dd0a4c99c0c0e57d0e7fbf30d
+Merge: a672cc1 4febd6d
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Tue May 12 01:05:56 2015 -0700
+
+    Merge branch 'master' of https://github.com/ashishsjsu/Bookshare
+
+commit a672cc10ec81b7bfedabd887ea83a70227f86a9f
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Tue May 12 01:05:45 2015 -0700
+
+    ViewBids HTML page Add
+
+commit 4febd6d110bdda62624d2ab062305e70e7e4f770
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Tue May 12 01:00:49 2015 -0700
+
+    book availability status updated
+
+commit 3361da142aab33e846ce2fc7c612e1ef00d420ce
+Merge: 6d4d5a2 2f5a21a
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 11 23:03:43 2015 -0700
+
+    Merge branch 'master' of https://github.com/ashishsjsu/Bookshare
+
+commit 6d4d5a2f195a679d5a61c0f1a0aa84d38db01afe
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 11 22:51:11 2015 -0700
+
+    Display bidding on non-user books only
+
+commit 2f5a21a2827808b68d9162b0c0f034e4958cc1cd
+Author: Neeraj Gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 11 21:15:39 2015 -0700
+
+    Update bid.html page
+
+commit 3a9f634ae3930d788cdcb680579ef8a27c4aed1a
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 11 21:06:39 2015 -0700
+
+    bind bid data to Angular file in controller and Html
+
+commit 8b64ef68e1ade7da9e474c638a1fd7fbd1f0f15a
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Mon May 11 20:52:00 2015 -0700
+
+    bid listing implementation - angular bindings
+
+commit b90eda20025d662772cd8488d329784e17bd4bbd
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 11 20:48:57 2015 -0700
+
+    Add Css for Alternate row
+
+commit 66cdf1953feeda497998ef50295097add648a46d
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 11 20:47:58 2015 -0700
+
+    Added Previous Bid's on Book container
+
+commit fd94056df88c5dee3002f2721c3978d57ab3d426
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Mon May 11 19:31:57 2015 -0700
+
+    place bid implementation intial commit
+
+commit 12d9092755a716cc9a060905a710465bc5f9687e
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Mon May 11 18:07:09 2015 -0700
+
+    bug fixes
+
+commit 9d3282e695c4f80914879be891db5a5c06285131
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Mon May 11 17:18:46 2015 -0700
+
+    Bid state implmentation in angular
+
+commit 089ebb51a3ea687d42882c85d295d51f87e0c91b
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Mon May 11 02:43:33 2015 -0700
+
+    Bid book front end added
+
+commit 27488b91ff7f591054f53525c991c2baf9b6487e
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 11 01:34:31 2015 -0700
+
+    added state for bidding.
+
+commit 8dcc632a547693497e3c5bf2548980ceef0961a9
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 11 01:31:26 2015 -0700
+
+    Create Bid.html
+
+commit 9523fbd6260cfd6790d8eff1f750516d65fc2ecf
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 11 01:30:34 2015 -0700
+
+    update css
+
+commit a1e5508ef2c4b4a4bfc1dee06a197012ae6b30f4
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Mon May 11 01:07:07 2015 -0700
+
+    email change
+
+commit d23cdb826c0f9f620e9ed73e911e3b08b9be394f
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Mon May 11 01:05:58 2015 -0700
+
+    email id addition
+
+commit a5dcea7729b3108fac52893ca65ccf373e7987a2
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Mon May 11 01:04:08 2015 -0700
+
+    bidId update
+
+commit 066cacc106ecadc3960f7e32917fb6f76bee3ddb
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Mon May 11 01:00:08 2015 -0700
+
+    email id addition
+
+commit 96845b7652e67db64ac84a3477027696effcc117
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Mon May 11 00:35:33 2015 -0700
+
+    Error messages added
+
+commit 051daf576222306bad7c49a1cdd6bcc3229a2021
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 11 00:28:37 2015 -0700
+
+    Edit Page for No result found
+
+commit 66818fa5842fd89d4412ba70e545b42da216dc26
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Mon May 11 00:00:54 2015 -0700
+
+    Search implemented
+
+commit 34d5f834997779722b35ecba0effc53006fa717c
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Sun May 10 20:45:02 2015 -0700
+
+    Search impleentation intial commit
+
+commit 2d79aea697e35d682a97c592119ebaa5ea0c229f
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Sun May 10 19:51:48 2015 -0700
+
+    List User book Page Update
+
+commit 8d82be020d47372fb01a5a2745fafb17654985b2
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Sun May 10 19:43:58 2015 -0700
+
+    Book listing by user
+
+commit f86dda442665086e4cbccc756e2be2cf3f323681
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Sun May 10 16:32:05 2015 -0700
+
+    Book add implementation updated
+
+commit 1ea88cbcc3c38d79dcf9b3328f174d16d45a5d09
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Sun May 10 13:38:09 2015 -0700
+
+    Added import file security context
+
+commit 192b41c293eca3f9099acf7ff5cffa7cd79dfab2
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Sun May 10 13:32:11 2015 -0700
+
+    Front end bug fixes
+
+commit c8da0e7b0383dfe3cc4ec155dea54e39918ed54b
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Sun May 10 13:19:15 2015 -0700
+
+    Front end fixed for add book page
+
+commit 0f3e93e1bc29029152fb08b5d2fc2ec7c7a33358
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Sun May 10 03:30:21 2015 -0700
+
+    Add Book Page Update
+
+commit fae34a15ae3b87727710aaf539dc1870ddfdd652
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Sun May 10 03:22:45 2015 -0700
+
+    Bug fix
+
+commit 36c2ad3c70f18c2fcd3e278471d59d9597c03fd1
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Sun May 10 03:05:50 2015 -0700
+
+    Missing function added to LoginDao
+
+commit 4296064d4a5b5bfe6b78b87422f836d9b2d7acab
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Sun May 10 02:50:43 2015 -0700
+
+    Remove unwanted app folder in resources
+
+commit 4a0e231d515032ff747c0f276c412dd27993a5bb
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Sun May 10 02:46:08 2015 -0700
+
+    DashBoard CSS update for Header
+
+commit 6bf09a2eea732b3c17d6de5352e0f72fb91f9868
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Sun May 10 02:41:27 2015 -0700
+
+    Spring security login implmentation updated
+
+commit 24998ab68b34d0c16b957ceb417b2d523041e700
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Sun May 10 02:36:53 2015 -0700
+
+    Spring security login implmentation updated
+
+commit 3a1c9c4ba74e93b9cc72d33db8d0752127cc20d2
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Sun May 10 02:30:50 2015 -0700
+
+    Login module - Springsecurity implemented
+
+commit efa7687377f006192b091bb2881ec74e672a7b8d
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 16:54:07 2015 -0700
+
+    Conflicts merged
+
+commit 0d505c5817f32e857fdf5d9aaab7adb6489846fc
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 16:52:50 2015 -0700
+
+    Conflicts merged
+
+commit c5b2b03d3da28e321542ce5ec8a03871fdc7c450
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 16:47:34 2015 -0700
+
+    Added one method and updated search
+
+commit 407bfc375a96de96bddf9f5a990a099820441837
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 16:44:02 2015 -0700
+
+    Upadted listUserBooks and listallBook Method
+
+commit 07ac4564ab6bb2dd937d0d734ef5359c6faba5ad
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 16:42:16 2015 -0700
+
+    Add new method allBooks
+
+commit dfaa82a1125a954953431fb478c8adb79dcf3bfe
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 16:41:13 2015 -0700
+
+    Update Profile View
+
+commit 6c6563b700ade33d0dd1dc2b6c73f3b1185deb5f
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 16:39:50 2015 -0700
+
+    Structure Update for list book
+
+commit cdf37323b80824a8319ab70b32e99cfc5532ebd5
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 16:38:24 2015 -0700
+
+    Partial Template Control logic Add for search,Profile and list Books
+
+commit e3142049830f0196293a06515147ed910e905c8e
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 16:36:00 2015 -0700
+
+    form tag Remove form search
+
+commit 914add3f2c01e141cfbc01ca40c4ec585cbd3238
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 14:29:33 2015 -0700
+
+    Error handling controller added
+
+commit fd6dc0a6a30d5fecf03d0f50cf67a6cd48b1118f
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 14:00:54 2015 -0700
+
+    Gradle dependency for Json added
+
+commit fe959fb7493bb6b7e5bc2e98b3959cfdc180e31e
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 13:59:33 2015 -0700
+
+    nested View for DashBoard Pages
+
+commit 1e98eb162adea8d6251b74bad41d54b54cd67018
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 03:34:34 2015 -0700
+
+    Added property
+
+commit 16f93c426dc9d98c8f4e91c218b766b8985bc7fb
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 03:32:54 2015 -0700
+
+    Sql Config File Edit
+
+commit 854abc0046cf9b91c936c3e248f82c8bbc4961ec
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 03:31:00 2015 -0700
+
+    gradle file update
+
+commit 987eb343fe04cc9c7d1572255fb5fa23d5151ad1
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 03:21:35 2015 -0700
+
+    Get student profile method implemented
+
+commit 4b06a064a57bfc138e283f43f520357961b21738
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 03:19:34 2015 -0700
+
+    get Student profile api class
+
+commit e5e76fb9f7c5954c5207568d15922a910344d417
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 03:18:20 2015 -0700
+
+    LoginDao Implementation class
+
+commit 2ee5f66563dd1ceccc22af0d662f914eb1df94d8
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 03:17:01 2015 -0700
+
+    LoginDao.java
+
+commit 3f7727023fbf93bad467d701b174d7bb505dacad
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 03:15:55 2015 -0700
+
+    MySql config update
+
+commit 04c2808c36a255466f58703e8d1c4d242d4176df
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 03:09:16 2015 -0700
+
+    New custom Exceptions
+
+commit ca7b4e3cdf5b543451b1e01f3369a190282f243a
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 03:08:16 2015 -0700
+
+    Added JSONView anotations to properties
+
+commit d71fd0752b3001d36d461d9e3af2ce5a92ee7c9a
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 03:06:28 2015 -0700
+
+    Login Constructors updated
+
+commit 752a48d9502b58ec0580730d02fba868b340c836
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 03:04:12 2015 -0700
+
+    JSONObj.java
+
+commit 54dc13785fc713102b408e32c911875848bf0099
+Author: ashishsjsu <ashish12021@gmail.com>
+Date:   Wed May 6 03:02:29 2015 -0700
+
+    Student login and register methods updated
+
+commit 4f4596e0b7f5d1e934d7e7f25cf38720db9b336d
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Wed May 6 02:55:24 2015 -0700
+
+    minor frontend bug fixes
+
+commit 71d1384c95be8cf357cba9fb64f8b7d25b16d2c5
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Wed May 6 02:54:32 2015 -0700
+
+    html partial templates for angular
+
+commit e04700fdeb3fa7d26fe291c26c58bee1fca106f0
+Author: ashish12021 <ashish12021@gmail.com>
+Date:   Wed May 6 02:53:25 2015 -0700
+
+    angular initial script
+
+commit 5d36d9c6b6cfd768a496b9e9818fda5fee3ba091
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 02:45:09 2015 -0700
+
+    Angular templates& fonts file add
+
+commit e1177ca5078fb2fed4c39672821e808663a886c1
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 02:10:15 2015 -0700
+
+    Css files for Front end and back ground image add
+
+commit 9410018847923687c4371030efce4c6548cd04d0
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Wed May 6 01:33:55 2015 -0700
+
+    Angular Controller class and Index.html Page
+
+commit e0fe73c31442c02bc27e41a309e8507c452bbdce
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Wed May 6 00:49:28 2015 -0700
+
+    Update
+
+commit 6eaa62660567409e242ab9aa5d555ef193e5789a
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Wed May 6 00:49:03 2015 -0700
+
+    update
+
+commit df4241f846021650a76cd2d77f79c4fdfc56884b
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Wed May 6 00:48:44 2015 -0700
+
+    Update BookBidsDao.java
+
+commit eb96d9e70295960b0a5aa98a1836f00fd034141d
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 23:58:45 2015 -0700
+
+    Update
+
+commit 7599e20372c10a5299d6006973fdf634b4cf61c8
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 23:58:00 2015 -0700
+
+    Update
+
+commit a9bda757c2d4654c3146cadf555f0394003670bb
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 23:57:05 2015 -0700
+
+    Update
+
+commit 3839114c59aa98f297c7eca4be784e3e0114d313
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 23:56:50 2015 -0700
+
+    Update BookBids.java
+
+commit 88b63be864ffeab53c6a02984fecb8c6c9beb8c1
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 23:55:55 2015 -0700
+
+    Update
+
+commit 938d3a2d1bf61cc11d8b69917a6e8325541d8086
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 23:55:24 2015 -0700
+
+    Update
+
+commit 73ce4e817ff42fc162a611663dcbd839d4252df4
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 23:54:46 2015 -0700
+
+    BookBidsDao update
+
+commit 8fed086021306153876b3241375f201cd7e0bfbb
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 23:53:55 2015 -0700
+
+    RentOrBuyController update
+
+commit 16eb8fbdaf882e98d098e8d12847200f9fc3096f
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 23:53:04 2015 -0700
+
+    BiddingController update
+
+commit dfb67f18aee38d66374489c0b43c1073ba1e316a
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 23:51:46 2015 -0700
+
+    AppController update
+
+commit d5dbceda344c3ffa439a8820475240bd3bfa9c3e
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 23:39:48 2015 -0700
+
+    Annotation Correction.
+
+commit 8d7df1e59a15a7717882e00cfe1e34c42f419a33
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 23:38:45 2015 -0700
+
+    Deleted dummy APIs.
+
+commit 887356188f6cfc767717e5587325c09d9f8bcaa7
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 23:34:09 2015 -0700
+
+    Update BiddingController.java
+
+commit b74b533596dd65abe61b2797ee3254be181bb144
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 23:26:53 2015 -0700
+
+    Initialized counter
+
+commit 9fe99524b85a60d9bce33cbca73aac22627cc17f
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 23:15:36 2015 -0700
+
+    Update bid dao impl
+
+commit 399e1b58e616930afe125ded33dfd4eb2351037d
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 23:14:54 2015 -0700
+
+    Update bid dao
+
+commit c9a82f71cb20ada4be10ba2da0a1f2296a067260
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 23:13:56 2015 -0700
+
+    Update bidding controller.
+
+commit 7994d3181f56dac312839fb6ca010e34b94c5908
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Tue May 5 22:11:42 2015 -0700
+
+    delete resource folder files for frontend
+
+commit 07d788b34e860cee9f4d7c0dcfa0d5da45fed672
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 21:20:09 2015 -0700
+
+    Counter initialized in Transaction Model.
+
+commit 5831d892eecedb5d7c735ebb32f563d13d5f2675
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 20:11:52 2015 -0700
+
+    Constructor changes in Transaction.
+
+commit 078c31e32c90124acc6c56188381719b9e8017eb
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 20:09:41 2015 -0700
+
+    Update model - added getter setter for type.
+
+commit 936c949c7c49583d159406caea91ac676a338a15
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 20:01:28 2015 -0700
+
+    Update in transaction
+
+commit 45d5a9f6f4109a208068747473d88c465eb4410a
+Author: anuragbhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 19:58:41 2015 -0700
+
+    Feedback update
+
+commit 7cf3f3a091c0032b1a7cda436dee4ead3ce1e8a5
+Merge: 52da351 29e7206
+Author: anuragbhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 19:43:22 2015 -0700
+
+    Merge branch 'master' of https://github.com/ashishsjsu/Bookshare
+
+commit 52da351f939219c3ea728a94cd630cdcd94d8c15
+Author: anuragbhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 19:43:13 2015 -0700
+
+    update
+
+commit 29e7206dd968161fbb83f24f3fe1d3134ce771cd
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 19:42:09 2015 -0700
+
+    Feedback Model Update
+
+commit af8ca4284fcb56f3a3d7105c6f3951392057ae17
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 19:41:07 2015 -0700
+
+    FeedbackController Update
+
+commit 5fd9309cbabf5547021ad519e58bb6430bc3ecc7
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 18:00:05 2015 -0700
+
+    Bidding added
+
+commit 5809c158aff0f976d83eed79984fb0b8a1fe89b0
+Merge: e739683 8dda073
+Author: anuragbhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 04:32:19 2015 -0700
+
+    Merge branch 'master' of https://github.com/ashishsjsu/Bookshare
+
+commit 8dda073e7280214670587cb69714f91feaa81fef
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 04:29:00 2015 -0700
+
+    StudentDaoImpl update
+
+commit f383449aa24a2e25b9c85991608d3035000acb47
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 04:26:51 2015 -0700
+
+    BookDaoImpl Update
+
+commit 3e5cf960ecc1fa137cac164fbaa386efccd6f9ff
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 04:24:06 2015 -0700
+
+    postBook method add
+
+commit bcf74b90808e90fc4e9628feda7fd36d40846c48
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 04:21:02 2015 -0700
+
+    New PostBook Model Add
+
+commit 9e895d85725637f9cb028694f2bb7b69613a3e28
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 04:20:24 2015 -0700
+
+    Removed Book Methods
+
+commit 2d0e1ff55dcb63db9e0e5b6736b633eed0ef35a8
+Author: Anurag Bhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 04:19:27 2015 -0700
+
+    Book methods seperated from AppController
+
+commit 3e8a164ab3c2327c018e64426751e84411b44b06
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Tue May 5 04:17:58 2015 -0700
+
+    Book Controller & Post Book Model Add
+
+commit e7396839b52159ab67ff95c8d02c012124d4fb62
+Author: anuragbhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 04:13:41 2015 -0700
+
+    PostBook add
+
+commit 56bc7be11e5a8cf3ad08462da11d2ecba70906de
+Author: anuragbhardwaj <anurag.wizard@gmail.com>
+Date:   Tue May 5 04:10:39 2015 -0700
+
+    BookController add
+
+commit adf5c0a2ac81bb38b92c5102c15975fb8a2d48fa
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Tue May 5 00:59:08 2015 -0700
+
+    Added transactioncs to Rent and Buying
+
+commit d60c80ae702238e5fa678a637c5e01202a57e00e
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Mon May 4 22:50:09 2015 -0700
+
+    added controller for rentOrBuy
+
+commit 54c3bbc3d3748253a47bb3a9e57e5b7a2940d471
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Mon May 4 21:17:26 2015 -0700
+
+    dao class add
+
+commit 2c9362348ebde94fa1ac15c8f99192d5ef476298
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Mon May 4 21:15:43 2015 -0700
+
+    feedback DAO. New Feedback controller added
+
+commit 25086c71664b833a3b0759a42c4d603217d9d718
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 4 20:15:08 2015 -0700
+
+    resource files
+
+commit 651b94655eab1ef67588d7515ec630f73eb1d251
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 4 20:07:29 2015 -0700
+
+    imported dependency class
+
+commit 2e82b97a73596eff1dfc2292b684f4bba4667ccf
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 4 19:58:17 2015 -0700
+
+    update
+
+commit c54032f210f32566f5157c89516dc155ab715e8e
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 4 19:54:02 2015 -0700
+
+    Change Return Type searchBook
+
+commit 7377a3111b5ba7f74065362c5abcb1aa8baa2d4e
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 4 19:52:54 2015 -0700
+
+    Search Book Method add(Partial)
+
+commit 0c64aa7ed23ae1fbac6f8013441a24b761697772
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 4 19:36:57 2015 -0700
+
+    Student Update & Search Book(Partially Done.)
+
+commit 1a0e4aebf0224a17b881bbb58e27f2fd198adb6f
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 4 19:32:14 2015 -0700
+
+    Update StudentDaoImpl.java to with student update method
+
+commit bd3727f67e97484084ca8151ab11315681464652
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Mon May 4 18:31:01 2015 -0700
+
+    Rent and Buy DAO/Model and Controller
+
+commit 43a870e45a4163341ddcae75b424c4221c620e28
+Author: Sanstuti Srivastav <sanstuti_srivastav@yahoo.co.in>
+Date:   Mon May 4 18:14:29 2015 -0700
+
+    Rent or buy model, DAO. COntroller has two new methods - for buying and renting
+
+commit 379b77a933ff3ebf5aeb5146c8424e67f70f2856
+Author: anuragbhardwaj <anurag.wizard@gmail.com>
+Date:   Mon May 4 03:30:24 2015 -0700
+
+    BookDaoImpl change
+
+commit 94036952e048021f88b824b712d6eca40edc1e75
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Mon May 4 02:44:00 2015 -0700
+
+    Model class structure Update & DAO Class include new method
+
+commit c07fa8b19d97360d7584365506b986e80e6efd9c
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Sun May 3 15:27:01 2015 -0700
+
+    Update gradle file
+
+commit 5f966c50c8ef98905c0b59a5d909035e3436c114
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Sun May 3 15:11:01 2015 -0700
+
+    Folder Structure Change
+
+commit ffaa71c1063a1e1a7dd5d4b96db3bfc4ed238fc3
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Sun May 3 01:38:08 2015 -0700
+
+    Model classes Transaction, Feedback, BookBids Update
+
+commit fc536fb874441fff7e6abcea96ec08d98efba015
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Sat May 2 23:24:16 2015 -0700
+
+    Update Gradle File
+
+commit 005b562f8c58264a8c95b9e29bde0c9bf04e7f84
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Sat May 2 23:21:53 2015 -0700
+
+    Update Dao Files
+
+commit ad9fd3ae697b3ec40f96cdbcccd98d2bcab59a65
+Author: anuragbhardwaj <anurag.wizard@gmail.com>
+Date:   Sat May 2 05:05:01 2015 -0700
+
+    Book API Setup
+
+commit 7ecdcf232f4daf1000ae9501b35e6ef88d67625e
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Sat May 2 00:34:54 2015 -0700
+
+    Controller Class Update
+
+commit 06015add8ea8015cab9b5237c54f096b4d9ea1d6
+Author: neeraj-gupta <neeraj.gupta@sjsu.edu>
+Date:   Fri May 1 22:32:29 2015 -0700
+
+    Cofiguration File Change
