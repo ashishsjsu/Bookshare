@@ -25,8 +25,9 @@ Using Spring tool suite IDE:
 
 Browse to localhost:9000
 Login details
-    username: trisha.j@sjsu.edu,  password: trisha
-    username: joe.l@sjsu.edu, password: joe
+*username: trisha.j@sjsu.edu,  password: trisha
+
+*username: joe.l@sjsu.edu, password: joe
     
     
 * Verify the mysql database credentials given in Util->SqlConfig.java and change to your local configuration.
